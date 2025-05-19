@@ -26,18 +26,27 @@ workspace/
 
 ### Phase 2: Smart Tools Design
 
-1. **`save_health_event`**
-   - Parameters: narrative_text, structured_data, user_id
-   - Saves both narrative and JSON versions
+1. **`record_health_narrative`**
+   - Parameters: user_id, narrative, optional event_type, optional event_date
+   - Simply captures the user's narrative
+   - Allows flexible event types
+   - No structured data required upfront
 
-2. **`get_health_narrative`**
+2. **`update_event_structure`**
+   - Parameters: event_id, user_id, structured_data
+   - Updates an existing event with extracted information
+   - Separates capture from extraction
+
+3. **`get_health_narrative`**
    - Returns the current narrative for display/editing
 
-3. **`search_health_events`**
-   - Query structured data by date, type, medication, etc.
+4. **`search_health_events`**
+   - Query by keyword, type, or date range
+   - Searches both narrative and structured data
 
-4. **`update_narrative_style`**
-   - Adjusts tone/style based on user preferences
+5. **`extract_health_info`**
+   - Analyzes narrative to extract structured data
+   - Returns JSON with medications, symptoms, etc.
 
 ### Phase 3: Conversation Flow
 
