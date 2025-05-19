@@ -232,63 +232,96 @@ def search_health_events(
 def extract_health_info(narrative: str) -> str:
     """
     Extract structured health information from a narrative.
-    Returns JSON with identified medications, symptoms, diagnoses, etc.
     
-    This is a simplified version - in practice, Claude would use
-    its understanding to extract more accurate information.
+    Extract structured data for any health-related entities mentioned:
+    - Create JSON keys based on what's actually discussed
+    - Don't force predefined categories - let the structure emerge from the content
+    - Capture relationships: "taking_for", "helps_with", "caused_by", "occurs_when"
+    - Include meta-information: certainty level, temporal markers, patient vs provider info
+    - Use arrays for multiple instances (e.g., multiple supplements)
+    - Nest related information (e.g., supplement → {name, dose, timing, purpose})
+    
+    Consider this is one EVENT in an ongoing health narrative:
+    - Each conversation creates a new event with today's date
+    - Recurring symptoms/conditions should be identifiable across events
+    - Use consistent naming for the same entity (e.g., "gas"/"gasiness"/"flatulence" → choose one)
+    - Include status updates: "ongoing", "improved", "worsened", "resolved"
+    
+    Keep future queries in mind - ensure the JSON can answer questions like:
+    - "When did [symptom] first appear?" (check multiple events)
+    - "How has [condition] progressed?" (compare across events)
+    - "What am I currently taking?" (most recent event data)
+    - "When did I stop [medication]?" (status changes across events)
+    
+    Goal: Rich, searchable structure that preserves all health details and enables both 
+    point-in-time and longitudinal queries.
     """
-    extracted = {
-        "symptoms": [],
-        "diagnoses": [],
-        "medications": [],
-        "test_results": [],
-        "recommendations": [],
-        "providers": []
-    }
+    # Note: This is a simplified example. In practice, Claude would use its
+    # natural language understanding to create a much richer extraction.
     
-    # Simple keyword extraction
+    # Example of flexible structure based on the guidance above
+    extracted = {}
+    
+    # Simple keyword extraction for demonstration
     narrative_lower = narrative.lower()
     
-    # Look for symptoms
-    symptom_keywords = ["pain", "ache", "fever", "cough", "fatigue", "nausea", "gas", "bloating"]
-    for keyword in symptom_keywords:
-        if keyword in narrative_lower:
-            extracted["symptoms"].append(keyword)
+    # Example: Extract symptoms with more detail
+    if any(word in narrative_lower for word in ["gas", "gasiness", "bloating", "flatulence"]):
+        extracted["symptoms"] = extracted.get("symptoms", [])
+        extracted["symptoms"].append({
+            "name": "gas",
+            "patient_term": "gasiness",
+            "clinical_term": "flatulence",
+            "status": "ongoing",
+            "first_mentioned": "today",
+            "notes": "Patient reports increased gasiness"
+        })
     
-    # Look for diagnoses
-    if "cholesterol" in narrative_lower and ("high" in narrative_lower or "elevated" in narrative_lower):
-        extracted["diagnoses"].append("high cholesterol")
-    if "diabetes" in narrative_lower:
-        extracted["diagnoses"].append("diabetes")
-    if "hypertension" in narrative_lower or "blood pressure" in narrative_lower:
-        extracted["diagnoses"].append("hypertension")
+    # Example: Extract supplements with detailed structure
+    if "vitamin d" in narrative_lower:
+        extracted["supplements"] = extracted.get("supplements", [])
+        extracted["supplements"].append({
+            "name": "Vitamin D",
+            "dose": "1000mg" if "1000" in narrative_lower else None,
+            "timing": "morning" if "morning" in narrative_lower else None,
+            "frequency": "daily"
+        })
     
-    # Look for medications
-    medication_keywords = {
-        "statin": "statin medication",
-        "atorvastatin": "atorvastatin (statin)",
-        "metformin": "metformin",
-        "aspirin": "aspirin",
-        "ibuprofen": "ibuprofen"
-    }
-    for keyword, med_name in medication_keywords.items():
-        if keyword in narrative_lower:
-            extracted["medications"].append({
-                "name": med_name,
-                "status": "mentioned"
+    if "magnesium" in narrative_lower:
+        extracted["supplements"] = extracted.get("supplements", [])
+        extracted["supplements"].append({
+            "name": "Magnesium",
+            "dose": "100mg" if "100" in narrative_lower else None,
+            "timing": "bedtime" if "bed" in narrative_lower or "night" in narrative_lower else None,
+            "purpose": "sleep" if "sleep" in narrative_lower else None
+        })
+    
+    # Example: Extract sleep patterns
+    if "sleep" in narrative_lower:
+        extracted["sleep"] = {
+            "quality": "variable",
+            "aids_used": []
+        }
+        if "melatonin" in narrative_lower:
+            extracted["sleep"]["aids_used"].append({
+                "name": "Melatonin",
+                "frequency": "occasionally" if "sometimes" in narrative_lower else None,
+                "effectiveness": None
             })
     
-    # Look for recommendations
-    if ("walk" in narrative_lower or "exercise" in narrative_lower) and "more" in narrative_lower:
-        extracted["recommendations"].append("increase physical activity")
-    if "diet" in narrative_lower:
-        extracted["recommendations"].append("dietary changes")
+    # Example: Extract temporal information
+    if "week" in narrative_lower and "ago" in narrative_lower:
+        extracted["timeline"] = {
+            "events": [{
+                "description": "symptom onset",
+                "time_ago": "weeks",
+                "specific": None
+            }]
+        }
     
-    # Look for providers
-    if "doctor" in narrative_lower or "dr." in narrative_lower:
-        extracted["providers"].append("doctor")
-    if "specialist" in narrative_lower:
-        extracted["providers"].append("specialist")
+    # This simplified example shows the flexible structure.
+    # In practice, Claude would create much more detailed and accurate extractions
+    # based on the full context and natural language understanding.
     
     return json.dumps(extracted, indent=2)
 
