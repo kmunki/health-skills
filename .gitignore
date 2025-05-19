@@ -22,8 +22,9 @@ file-ops-mcp/venv/
 .DS_Store
 
 # Health data - IMPORTANT: User's personal health information
-health-assist/workspace/**
-!health-assist/workspace/.gitkeep
+workspace/**
+!workspace/.gitkeep
+!workspace/*/.gitkeep
 
 # Temporary files
 *.tmp
