@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Health Event",
+  "description": "A single health-related event in a user's health narrative",
+  "type": "object",
+  "required": ["id", "user_id", "date", "type", "narrative"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for this event (UUID)"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "User identifier (e.g., 'bob')"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the event (YYYY-MM-DD)"
+    },
+    "time": {
+      "type": "string",
+      "format": "time",
+      "description": "Optional time of the event (HH:MM:SS)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "doctor_visit",
+        "symptom",
+        "medication_start",
+        "medication_stop",
+        "medication_change",
+        "test_result",
+        "diagnosis",
+        "procedure",
+        "lifestyle_change",
+        "note"
+      ],
+      "description": "Type of health event"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "User's own words describing the event"
+    },
+    "structured": {
+      "type": "object",
+      "description": "Structured data extracted from the narrative",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Healthcare provider name"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of care (hospital, clinic, etc.)"
+        },
+        "symptoms": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of symptoms mentioned"
+        },
+        "diagnoses": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "List of diagnoses"
+        },
+        "medications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "generic_name": {"type": "string"},
+              "dosage": {"type": "string"},
+              "frequency": {"type": "string"},
+              "status": {
+                "type": "string",
+                "enum": ["started", "stopped", "changed", "continued"]
+              }
+            }
+          },
+          "description": "Medications involved in this event"
+        },
+        "test_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "test_name": {"type": "string"},
+              "value": {"type": "string"},
+              "unit": {"type": "string"},
+              "reference_range": {"type": "string"},
+              "status": {
+                "type": "string",
+                "enum": ["normal", "high", "low", "abnormal"]
+              }
+            }
+          },
+          "description": "Test results mentioned"
+        },
+        "recommendations": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Doctor's recommendations (exercise, diet, etc.)"
+        },
+        "follow_up": {
+          "type": "string",
+          "description": "Follow-up instructions or next appointment"
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "User-defined tags for categorization"
+    },
+    "confidence_level": {
+      "type": "string",
+      "enum": ["certain", "likely", "uncertain"],
+      "description": "AI's confidence in the extracted structured data"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this record was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when this record was last updated"
+    }
+  }
+}

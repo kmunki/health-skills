@@ -1,0 +1,3 @@
+mcp[cli]
+jsonschema
+python-dateutil
