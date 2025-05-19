@@ -7,7 +7,7 @@ mcp = FastMCP("File Operations Server")
 
 # Define workspace directory using environment variable
 WORKSPACE_DIR = Path(os.environ.get("HEALTH_ASSIST_WORKSPACE", 
-                                    str(Path(__file__).parent.parent / "health-assist" / "workspace")))
+                                    str(Path(__file__).parent.parent / "workspace")))
 WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
 
 @mcp.tool()

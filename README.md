@@ -9,14 +9,14 @@ Health Assist helps users track their personal health story through natural conv
 ## Architecture
 
 ```
-health-assist/
+Health Assist/
 ├── file-ops-mcp/       # MCP server for file operations
-├── health-assist/      # Main project directory
-│   └── workspace/      # User health data (git-ignored)
-│       ├── narratives/    # Human-readable health stories
-│       ├── structured/    # JSON-formatted health events
-│       └── conversations/ # Chat logs with AI
-└── README.md
+├── workspace/          # User health data (git-ignored)
+│   ├── narratives/    # Human-readable health stories
+│   ├── structured/    # JSON-formatted health events
+│   └── conversations/ # Chat logs with AI
+├── README.md
+└── health_assist_plan.md
 ```
 
 ## Key Features
@@ -44,7 +44,7 @@ health-assist/
          "command": "/path/to/file-ops-mcp/venv/bin/python",
          "args": ["/path/to/file-ops-mcp/server.py"],
          "env": {
-           "HEALTH_ASSIST_WORKSPACE": "/path/to/health-assist/workspace"
+           "HEALTH_ASSIST_WORKSPACE": "/path/to/Health Assist/workspace"
          }
        }
      }
