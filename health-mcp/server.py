@@ -2,10 +2,8 @@ from mcp.server.fastmcp import FastMCP
 import json
 import os
 from pathlib import Path
-from datetime import datetime
-import uuid
-from typing import Dict, List, Optional
-from dateutil import parser as date_parser
+from datetime import datetime, timedelta
+from typing import Optional, Dict, List
 
 # Create server instance
 mcp = FastMCP("Health Narrative Server")
@@ -14,346 +12,263 @@ mcp = FastMCP("Health Narrative Server")
 WORKSPACE_DIR = Path(os.environ.get("HEALTH_ASSIST_WORKSPACE", 
                                     str(Path(__file__).parent.parent / "workspace")))
 
-# Ensure subdirectories exist
-(WORKSPACE_DIR / "narratives").mkdir(parents=True, exist_ok=True)
-(WORKSPACE_DIR / "structured").mkdir(parents=True, exist_ok=True)
-(WORKSPACE_DIR / "conversations").mkdir(parents=True, exist_ok=True)
+def create_filename(topic: str, date: str) -> str:
+    """Create a human-readable filename from topic and date"""
+    # Clean the topic to be filename-safe
+    safe_topic = topic.lower().replace(" ", "-").replace("_", "-")
+    safe_topic = "".join(c for c in safe_topic if c.isalnum() or c == "-")
+    return f"{date}-{safe_topic}"
+
+def ensure_user_dirs(user_id: str):
+    """Ensure user directories exist"""
+    (WORKSPACE_DIR / "narratives" / user_id).mkdir(parents=True, exist_ok=True)
+    (WORKSPACE_DIR / "structured" / user_id).mkdir(parents=True, exist_ok=True)
 
 @mcp.tool()
-def record_health_narrative(
+def save_health_note(
     user_id: str,
+    topic: str,
     narrative: str,
-    event_type: Optional[str] = None,
-    event_date: Optional[str] = None
+    date: Optional[str] = None,
+    extract_structure: bool = True
 ) -> str:
     """
-    Record a health narrative from the user's natural conversation.
+    Save a health note with human-readable naming.
     
     Args:
-        user_id: User identifier (e.g., 'bob')
+        user_id: User identifier (e.g., 'kyle')
+        topic: Brief description (e.g., 'gas-issues', 'supplements-update')
         narrative: User's description in their own words
-        event_type: Optional type of event (any string allowed)
-        event_date: Optional date (YYYY-MM-DD), defaults to today
+        date: Optional date (YYYY-MM-DD), defaults to today
+        extract_structure: Whether to create a structured JSON file
     """
     try:
-        # Create event
-        event = {
-            "id": str(uuid.uuid4()),
-            "user_id": user_id,
-            "date": event_date or datetime.now().strftime("%Y-%m-%d"),
-            "type": event_type or "health_note",
-            "narrative": narrative,
-            "structured": {},  # Empty for now, can be filled later
-            "created_at": datetime.now().isoformat(),
-            "updated_at": datetime.now().isoformat()
-        }
+        ensure_user_dirs(user_id)
+        date_str = date or datetime.now().strftime("%Y-%m-%d")
+        filename = create_filename(topic, date_str)
         
-        # Save structured data
-        structured_file = WORKSPACE_DIR / "structured" / f"{user_id}_events.json"
-        events = []
-        if structured_file.exists():
-            with open(structured_file, "r") as f:
-                events = json.load(f)
-        events.append(event)
-        with open(structured_file, "w") as f:
-            json.dump(events, f, indent=2, default=str)
+        # Save narrative
+        narrative_path = WORKSPACE_DIR / "narratives" / user_id / f"{filename}.md"
+        with open(narrative_path, "w") as f:
+            f.write(f"# {topic.replace('-', ' ').title()} - {date_str}\n\n")
+            f.write(narrative)
         
-        # Update narrative file
-        narrative_file = WORKSPACE_DIR / "narratives" / f"{user_id}_narrative.md"
-        with open(narrative_file, "a") as f:
-            if narrative_file.exists() and narrative_file.stat().st_size > 0:
-                f.write("\n\n")
-            title = event_type.replace('_', ' ').title() if event_type else "Health Note"
-            f.write(f"## {event['date']} - {title}\n\n")
-            f.write(f"{narrative}\n")
+        # Save basic structure
+        if extract_structure:
+            structure = {
+                "date": date_str,
+                "topic": topic,
+                "narrative": narrative,
+                "extracted_info": {}  # Claude can fill this via update_health_note
+            }
+            
+            json_path = WORKSPACE_DIR / "structured" / user_id / f"{filename}.json"
+            with open(json_path, "w") as f:
+                json.dump(structure, f, indent=2)
         
-        return f"Recorded health narrative (ID: {event['id'][:8]}...)"
+        return f"Saved health note: {filename}"
     except Exception as e:
-        return f"Error recording health narrative: {str(e)}"
+        return f"Error saving health note: {str(e)}"
 
 @mcp.tool()
-def update_event_structure(
-    event_id: str,
+def read_health_notes(
     user_id: str,
-    structured_data: Dict
+    days_back: Optional[int] = 30,
+    topic_filter: Optional[str] = None
 ) -> str:
     """
-    Update the structured data for an existing health event.
-    This is typically called after AI extracts information from the narrative.
-    
-    Args:
-        event_id: ID of the event to update
-        user_id: User identifier
-        structured_data: Dictionary of extracted health information
-    """
-    try:
-        structured_file = WORKSPACE_DIR / "structured" / f"{user_id}_events.json"
-        
-        if not structured_file.exists():
-            return f"No events found for user: {user_id}"
-        
-        with open(structured_file, "r") as f:
-            events = json.load(f)
-        
-        # Find and update the event
-        updated = False
-        for event in events:
-            if event['id'] == event_id:
-                event['structured'] = structured_data
-                event['updated_at'] = datetime.now().isoformat()
-                updated = True
-                break
-        
-        if not updated:
-            return f"Event not found: {event_id}"
-        
-        # Save updated events
-        with open(structured_file, "w") as f:
-            json.dump(events, f, indent=2, default=str)
-        
-        return f"Updated structured data for event: {event_id[:8]}..."
-    except Exception as e:
-        return f"Error updating event structure: {str(e)}"
-
-@mcp.tool()
-def get_health_narrative(user_id: str) -> str:
-    """Get the complete health narrative for a user."""
-    narrative_file = WORKSPACE_DIR / "narratives" / f"{user_id}_narrative.md"
-    
-    if not narrative_file.exists():
-        return f"No health narrative found for user: {user_id}"
-    
-    try:
-        with open(narrative_file, "r") as f:
-            content = f.read()
-        return content if content else "Health narrative is empty"
-    except Exception as e:
-        return f"Error reading health narrative: {str(e)}"
-
-@mcp.tool()
-def get_recent_events(user_id: str, limit: int = 5) -> str:
-    """Get the most recent health events for a user."""
-    structured_file = WORKSPACE_DIR / "structured" / f"{user_id}_events.json"
-    
-    if not structured_file.exists():
-        return f"No health events found for user: {user_id}"
-    
-    try:
-        with open(structured_file, "r") as f:
-            events = json.load(f)
-        
-        # Sort by date (most recent first)
-        events.sort(key=lambda x: x.get('date', ''), reverse=True)
-        
-        # Get recent events
-        recent = events[:limit]
-        
-        # Format for display
-        result = f"Recent health events for {user_id}:\n\n"
-        for event in recent:
-            result += f"**{event['date']}** - {event['type'].replace('_', ' ').title()}\n"
-            result += f"{event['narrative']}\n"
-            if event.get('structured'):
-                result += f"*Extracted info:* {json.dumps(event['structured'], indent=2)}\n"
-            result += "\n"
-        
-        return result
-    except Exception as e:
-        return f"Error reading health events: {str(e)}"
-
-@mcp.tool()
-def search_health_events(
-    user_id: str,
-    query: str,
-    event_type: Optional[str] = None,
-    start_date: Optional[str] = None,
-    end_date: Optional[str] = None
-) -> str:
-    """
-    Search health events by keyword, type, or date range.
+    Read recent health notes for a user.
     
     Args:
         user_id: User identifier
-        query: Text to search for in narratives
-        event_type: Optional filter by event type
-        start_date: Optional filter after this date (YYYY-MM-DD)
-        end_date: Optional filter before this date (YYYY-MM-DD)
+        days_back: How many days of history to read (default 30)
+        topic_filter: Optional topic to filter by (e.g., 'supplements')
     """
-    structured_file = WORKSPACE_DIR / "structured" / f"{user_id}_events.json"
-    
-    if not structured_file.exists():
-        return f"No health events found for user: {user_id}"
-    
     try:
-        with open(structured_file, "r") as f:
-            events = json.load(f)
+        narratives_dir = WORKSPACE_DIR / "narratives" / user_id
+        structured_dir = WORKSPACE_DIR / "structured" / user_id
         
-        # Filter events
-        filtered = []
-        query_lower = query.lower()
+        if not narratives_dir.exists():
+            return f"No health notes found for user: {user_id}"
         
-        for event in events:
-            # Check text match in narrative
-            if query_lower not in event['narrative'].lower():
-                # Also check structured data
-                if query_lower not in json.dumps(event.get('structured', {})).lower():
+        # Get all files from the last N days
+        cutoff_date = datetime.now() - timedelta(days=days_back)
+        notes = []
+        
+        for narrative_file in sorted(narratives_dir.glob("*.md"), reverse=True):
+            # Parse date from filename (YYYY-MM-DD-topic.md)
+            try:
+                file_date = datetime.strptime(narrative_file.stem[:10], "%Y-%m-%d")
+                if file_date < cutoff_date:
                     continue
-            
-            # Check event type if specified
-            if event_type and event['type'].lower() != event_type.lower():
+                    
+                # Apply topic filter if provided
+                if topic_filter:
+                    file_topic = narrative_file.stem[11:]  # Everything after date
+                    if topic_filter.lower() not in file_topic.lower():
+                        continue
+                
+                # Read narrative
+                with open(narrative_file, "r") as f:
+                    narrative_content = f.read()
+                
+                # Read structured data if it exists
+                json_file = structured_dir / f"{narrative_file.stem}.json"
+                structured_data = {}
+                if json_file.exists():
+                    with open(json_file, "r") as f:
+                        structured_data = json.load(f)
+                
+                notes.append({
+                    "filename": narrative_file.stem,
+                    "date": file_date.strftime("%Y-%m-%d"),
+                    "narrative": narrative_content,
+                    "structured": structured_data
+                })
+                
+            except ValueError:
+                # Skip files that don't match our naming pattern
                 continue
-            
-            # Check date range
-            event_date = event.get('date', '')
-            if start_date and event_date < start_date:
-                continue
-            if end_date and event_date > end_date:
-                continue
-            
-            filtered.append(event)
         
-        # Sort by date
-        filtered.sort(key=lambda x: x.get('date', ''), reverse=True)
+        if not notes:
+            return f"No health notes found in the last {days_back} days"
         
         # Format results
-        if not filtered:
-            return f"No matching events found for '{query}'"
-        
-        result = f"Found {len(filtered)} matching events:\n\n"
-        for event in filtered:
-            result += f"**{event['date']}** - {event['type'].replace('_', ' ').title()}\n"
-            result += f"{event['narrative']}\n\n"
+        result = f"Health notes for {user_id} (last {days_back} days):\n\n"
+        for note in notes:
+            result += f"=== {note['filename']} ===\n"
+            result += note['narrative']
+            if note['structured'] and note['structured'].get('extracted_info'):
+                result += f"\n\nExtracted Info:\n{json.dumps(note['structured']['extracted_info'], indent=2)}"
+            result += "\n\n"
         
         return result
     except Exception as e:
-        return f"Error searching health events: {str(e)}"
+        return f"Error reading health notes: {str(e)}"
 
 @mcp.tool()
-def extract_health_info(narrative: str) -> str:
-    """
-    Extract structured health information from a narrative.
-    
-    Extract structured data for any health-related entities mentioned:
-    - Create JSON keys based on what's actually discussed
-    - Don't force predefined categories - let the structure emerge from the content
-    - Capture relationships: "taking_for", "helps_with", "caused_by", "occurs_when"
-    - Include meta-information: certainty level, temporal markers, patient vs provider info
-    - Use arrays for multiple instances (e.g., multiple supplements)
-    - Nest related information (e.g., supplement → {name, dose, timing, purpose})
-    
-    Consider this is one EVENT in an ongoing health narrative:
-    - Each conversation creates a new event with today's date
-    - Recurring symptoms/conditions should be identifiable across events
-    - Use consistent naming for the same entity (e.g., "gas"/"gasiness"/"flatulence" → choose one)
-    - Include status updates: "ongoing", "improved", "worsened", "resolved"
-    
-    Keep future queries in mind - ensure the JSON can answer questions like:
-    - "When did [symptom] first appear?" (check multiple events)
-    - "How has [condition] progressed?" (compare across events)
-    - "What am I currently taking?" (most recent event data)
-    - "When did I stop [medication]?" (status changes across events)
-    
-    Goal: Rich, searchable structure that preserves all health details and enables both 
-    point-in-time and longitudinal queries.
-    """
-    # Note: This is a simplified example. In practice, Claude would use its
-    # natural language understanding to create a much richer extraction.
-    
-    # Example of flexible structure based on the guidance above
-    extracted = {}
-    
-    # Simple keyword extraction for demonstration
-    narrative_lower = narrative.lower()
-    
-    # Example: Extract symptoms with more detail
-    if any(word in narrative_lower for word in ["gas", "gasiness", "bloating", "flatulence"]):
-        extracted["symptoms"] = extracted.get("symptoms", [])
-        extracted["symptoms"].append({
-            "name": "gas",
-            "patient_term": "gasiness",
-            "clinical_term": "flatulence",
-            "status": "ongoing",
-            "first_mentioned": "today",
-            "notes": "Patient reports increased gasiness"
-        })
-    
-    # Example: Extract supplements with detailed structure
-    if "vitamin d" in narrative_lower:
-        extracted["supplements"] = extracted.get("supplements", [])
-        extracted["supplements"].append({
-            "name": "Vitamin D",
-            "dose": "1000mg" if "1000" in narrative_lower else None,
-            "timing": "morning" if "morning" in narrative_lower else None,
-            "frequency": "daily"
-        })
-    
-    if "magnesium" in narrative_lower:
-        extracted["supplements"] = extracted.get("supplements", [])
-        extracted["supplements"].append({
-            "name": "Magnesium",
-            "dose": "100mg" if "100" in narrative_lower else None,
-            "timing": "bedtime" if "bed" in narrative_lower or "night" in narrative_lower else None,
-            "purpose": "sleep" if "sleep" in narrative_lower else None
-        })
-    
-    # Example: Extract sleep patterns
-    if "sleep" in narrative_lower:
-        extracted["sleep"] = {
-            "quality": "variable",
-            "aids_used": []
-        }
-        if "melatonin" in narrative_lower:
-            extracted["sleep"]["aids_used"].append({
-                "name": "Melatonin",
-                "frequency": "occasionally" if "sometimes" in narrative_lower else None,
-                "effectiveness": None
-            })
-    
-    # Example: Extract temporal information
-    if "week" in narrative_lower and "ago" in narrative_lower:
-        extracted["timeline"] = {
-            "events": [{
-                "description": "symptom onset",
-                "time_ago": "weeks",
-                "specific": None
-            }]
-        }
-    
-    # This simplified example shows the flexible structure.
-    # In practice, Claude would create much more detailed and accurate extractions
-    # based on the full context and natural language understanding.
-    
-    return json.dumps(extracted, indent=2)
-
-@mcp.tool()
-def save_conversation(
+def update_health_note(
     user_id: str,
-    conversation: str,
-    date: Optional[str] = None
+    filename: str,
+    extracted_info: Dict
 ) -> str:
     """
-    Save a conversation for future reference.
+    Update the structured data for a health note.
     
     Args:
         user_id: User identifier
-        conversation: The conversation text
-        date: Optional date, defaults to today
+        filename: The filename (e.g., '2025-01-19-gas-issues')
+        extracted_info: Dictionary of extracted health information
     """
     try:
-        date_str = date or datetime.now().strftime("%Y-%m-%d")
-        timestamp = datetime.now().strftime("%H-%M-%S")
+        json_path = WORKSPACE_DIR / "structured" / user_id / f"{filename}.json"
         
-        conv_file = WORKSPACE_DIR / "conversations" / f"{user_id}_{date_str}_{timestamp}.md"
+        if not json_path.exists():
+            return f"No structured file found: {filename}"
         
-        with open(conv_file, "w") as f:
-            f.write(f"# Health Conversation - {date_str} {timestamp}\n\n")
-            f.write(f"User: {user_id}\n\n")
-            f.write("---\n\n")
-            f.write(conversation)
+        # Read existing structure
+        with open(json_path, "r") as f:
+            structure = json.load(f)
         
-        return f"Saved conversation to {conv_file.name}"
+        # Update extracted info
+        structure['extracted_info'] = extracted_info
+        structure['updated_at'] = datetime.now().isoformat()
+        
+        # Save updated structure
+        with open(json_path, "w") as f:
+            json.dump(structure, f, indent=2)
+        
+        return f"Updated structured data for: {filename}"
     except Exception as e:
-        return f"Error saving conversation: {str(e)}"
+        return f"Error updating health note: {str(e)}"
+
+@mcp.tool()
+def find_health_topics(user_id: str) -> str:
+    """
+    List all health topics that have been discussed.
+    
+    Args:
+        user_id: User identifier
+    """
+    try:
+        narratives_dir = WORKSPACE_DIR / "narratives" / user_id
+        
+        if not narratives_dir.exists():
+            return f"No health notes found for user: {user_id}"
+        
+        topics = set()
+        dates_by_topic = {}
+        
+        for narrative_file in narratives_dir.glob("*.md"):
+            try:
+                # Extract topic from filename (YYYY-MM-DD-topic.md)
+                parts = narrative_file.stem.split("-", 3)
+                if len(parts) >= 4:
+                    topic = parts[3]
+                    date = "-".join(parts[:3])
+                    
+                    topics.add(topic)
+                    if topic not in dates_by_topic:
+                        dates_by_topic[topic] = []
+                    dates_by_topic[topic].append(date)
+            except:
+                continue
+        
+        if not topics:
+            return "No topics found"
+        
+        # Format results
+        result = f"Health topics for {user_id}:\n\n"
+        for topic in sorted(topics):
+            dates = sorted(dates_by_topic[topic], reverse=True)
+            result += f"**{topic.replace('-', ' ').title()}**\n"
+            result += f"  Discussed on: {', '.join(dates[:5])}"
+            if len(dates) > 5:
+                result += f" ... ({len(dates)} total)"
+            result += "\n\n"
+        
+        return result
+    except Exception as e:
+        return f"Error finding health topics: {str(e)}"
+
+@mcp.tool()
+def get_health_note(
+    user_id: str,
+    filename: str
+) -> str:
+    """
+    Get a specific health note by filename.
+    
+    Args:
+        user_id: User identifier
+        filename: The filename (e.g., '2025-01-19-gas-issues')
+    """
+    try:
+        narrative_path = WORKSPACE_DIR / "narratives" / user_id / f"{filename}.md"
+        json_path = WORKSPACE_DIR / "structured" / user_id / f"{filename}.json"
+        
+        if not narrative_path.exists():
+            return f"Health note not found: {filename}"
+        
+        # Read narrative
+        with open(narrative_path, "r") as f:
+            narrative = f.read()
+        
+        # Read structured data if it exists
+        structured = {}
+        if json_path.exists():
+            with open(json_path, "r") as f:
+                structured = json.load(f)
+        
+        result = f"=== {filename} ===\n\n"
+        result += narrative
+        
+        if structured and structured.get('extracted_info'):
+            result += f"\n\nExtracted Info:\n{json.dumps(structured['extracted_info'], indent=2)}"
+        
+        return result
+    except Exception as e:
+        return f"Error reading health note: {str(e)}"
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

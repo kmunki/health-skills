@@ -17,36 +17,46 @@ Combining MCP tools with Claude's natural conversation abilities:
 ```
 workspace/
 ├── narratives/
-│   └── {user}_narrative.md     # Human-readable story
+│   └── {user}/
+│       ├── 2025-01-19-gas-issues.md
+│       └── 2025-01-20-supplements.md
 ├── structured/
-│   └── {user}_events.json      # Structured health events
+│   └── {user}/
+│       ├── 2025-01-19-gas-issues.json
+│       └── 2025-01-20-supplements.json
 └── conversations/
-    └── {user}_chat_{date}.md   # Conversation logs
+    └── {user}_chat_{date}.md
 ```
 
-### Phase 2: Smart Tools Design
+Each health note is a separate file with human-readable naming.
 
-1. **`record_health_narrative`**
-   - Parameters: user_id, narrative, optional event_type, optional event_date
-   - Simply captures the user's narrative
-   - Allows flexible event types
-   - No structured data required upfront
+### Phase 2: Simplified Tools Design
 
-2. **`update_event_structure`**
-   - Parameters: event_id, user_id, structured_data
-   - Updates an existing event with extracted information
-   - Separates capture from extraction
+1. **`save_health_note`**
+   - Parameters: user_id, topic, narrative, optional date
+   - Saves individual files with human-readable names
+   - Creates both .md and .json files
+   - Example filename: `2025-01-19-gas-issues`
 
-3. **`get_health_narrative`**
-   - Returns the current narrative for display/editing
+2. **`read_health_notes`**
+   - Parameters: user_id, days_back, optional topic_filter
+   - Reads recent health notes
+   - Returns both narrative and structured data
+   - Claude handles filtering and searching in-memory
 
-4. **`search_health_events`**
-   - Query by keyword, type, or date range
-   - Searches both narrative and structured data
+3. **`update_health_note`**
+   - Parameters: user_id, filename, extracted_info
+   - Updates the JSON file with extracted information
+   - Uses human-readable filenames
 
-5. **`extract_health_info`**
-   - Analyzes narrative to extract structured data
-   - Returns JSON with medications, symptoms, etc.
+4. **`find_health_topics`**
+   - Lists all topics discussed for a user
+   - Shows dates for each topic
+   - Helps with topic discovery
+
+5. **`get_health_note`**
+   - Gets a specific note by filename
+   - Returns both narrative and structured data
 
 ### Phase 3: Conversation Flow
 
