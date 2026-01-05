@@ -1,46 +1,33 @@
 # Health Skills
 
-AI skills that close the "clinical friend" gap.
+AI that closes the "clinical friend" gap.
 
 ## The Problem
 
 People with doctors in their social network get informal health guidance—"here's what they'll probably ask," "make sure you mention X," "that sounds like it could be Y." Everyone else navigates healthcare alone.
 
-AI can fill this gap, but most people aren't using it well. They ask questions in isolation, as if talking to a stranger every time. They don't realize that context changes everything.
+## The Solution
 
-## The Insight
+One skill that turns Claude into a knowledgeable friend who happens to know medicine.
 
-AI already knows medicine. What it doesn't know is *you*.
-
-This skill fixes that.
-
-## How It Works
-
-**One skill, always current.**
-
-Install `health-assistant` once. It fetches the latest guidance from this repo whenever you ask health questions. No reinstalls needed when we improve things.
-
-The skill handles three modes:
-- **Health Baseline** — Build your health context (one-time setup)
-- **Symptom Exploration** — Think through concerns like a clinician would
-- **Visit Prep** — Prepare for medical appointments
-
-## Transparency
-
-Everything the AI sees is public in [`/guidance`](./guidance/). You can read exactly what instructions it's getting.
+**Three modes:**
+- **Build context** — One-time setup so Claude knows *you*, not just medicine
+- **Think through symptoms** — Explore possibilities like a clinician would
+- **Prepare for visits** — Make the most of limited face time with doctors
 
 ## Installation
 
-1. Download [`skills/health-assistant`](./skills/health-assistant/) as a zip
-2. In Claude Desktop, go to Settings → Skills → Add Skill
+1. Download [`health-assistant.zip`](./skills/health-assistant.zip)
+2. Claude Desktop → Settings → Skills → Add Skill
 3. Upload the zip
 
-## Important Limitations
+## Important
 
-- **Not for emergencies.** If you're in crisis, call 911 or go to the ER.
-- **Doesn't replace doctors.** This helps you work with them better, not avoid them.
-- **Not medical advice.** AI can help you think, but decisions are yours.
+- **Not for emergencies.** Chest pain, stroke symptoms, breathing difficulty → call 911.
+- **Not diagnosis.** Helps you think, not tells you what you have.
+- **Not a replacement.** Helps you work with doctors better, not avoid them.
 
-## Status
+## Full Guidance
 
-Early development. Testing with friends before wider release.
+See the website for philosophy, examples, and detailed guidance:
+https://kmunki.github.io/health-skills/
