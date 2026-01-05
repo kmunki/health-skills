@@ -27,6 +27,8 @@
       --border-light: #3a3a4a;
       --warning: #fbbf24;
       --warning-bg: rgba(251, 191, 36, 0.1);
+      --bad: #f87171;
+      --bad-bg: rgba(248, 113, 113, 0.1);
     }
 
     * {
@@ -61,19 +63,78 @@
     }
 
     /* Layout */
-    .container {
-      max-width: 720px;
+    .page-wrapper {
+      display: flex;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
+    .sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      padding-right: 32px;
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      .sidebar {
+        display: block;
+      }
+    }
+
+    .sidebar-inner {
+      position: sticky;
+      top: 24px;
+      padding-top: 48px;
+    }
+
+    .sidebar h4 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .sidebar a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      max-width: 680px;
+    }
+
     /* Header */
     header {
-      padding: 20px 0;
+      padding: 20px 24px;
       border-bottom: 1px solid var(--border);
     }
 
-    header .container {
+    header .inner {
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
       align-items: baseline;
       gap: 8px;
@@ -105,12 +166,12 @@
 
     /* Hero */
     .hero {
-      padding: 60px 0 48px;
+      padding: 48px 0 40px;
       border-bottom: 1px solid var(--border);
     }
 
     .hero h1 {
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.2;
@@ -122,80 +183,116 @@
     }
 
     .hero-subtitle {
-      font-size: 18px;
+      font-size: 17px;
       color: var(--text-secondary);
-      max-width: 560px;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border-radius: 6px;
+    .hero-links {
       font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.15s;
+      color: var(--text-muted);
     }
 
-    .btn:hover {
-      text-decoration: none;
+    /* Carousel */
+    .carousel-section {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg-primary);
+    .carousel-section h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
     }
 
-    .btn-primary:hover {
-      background: var(--accent-dim);
+    .carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 16px;
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
     }
 
-    .btn-secondary {
-      background: var(--bg-tertiary);
-      border: 1px solid var(--border);
-      color: var(--text-primary);
+    .carousel::-webkit-scrollbar {
+      height: 6px;
     }
 
-    .btn-secondary:hover {
-      border-color: var(--border-light);
+    .carousel::-webkit-scrollbar-track {
       background: var(--bg-secondary);
+      border-radius: 3px;
     }
 
-    /* Example conversation */
-    .example-convo {
-      margin-top: 40px;
+    .carousel::-webkit-scrollbar-thumb {
+      background: var(--border-light);
+      border-radius: 3px;
+    }
+
+    .carousel-card {
+      flex: 0 0 340px;
+      scroll-snap-align: start;
       background: var(--bg-code);
       border: 1px solid var(--border);
       border-radius: 8px;
       overflow: hidden;
     }
 
-    .example-header {
+    .carousel-card.bad {
+      border-color: var(--bad);
+      border-color: rgba(248, 113, 113, 0.4);
+    }
+
+    .carousel-card.good {
+      border-color: var(--accent);
+      border-color: rgba(94, 234, 212, 0.4);
+    }
+
+    .card-header {
       padding: 12px 16px;
       background: var(--bg-tertiary);
       border-bottom: 1px solid var(--border);
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .example-body {
-      padding: 20px;
+    .card-header .tag {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .bad .tag {
+      background: var(--bad-bg);
+      color: var(--bad);
+    }
+
+    .good .tag {
+      background: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    .card-header .title {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .card-body {
+      padding: 16px;
+      max-height: 400px;
+      overflow-y: auto;
     }
 
     .msg {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .msg:last-child {
@@ -203,11 +300,11 @@
     }
 
     .msg-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .msg-user .msg-label {
@@ -219,13 +316,18 @@
     }
 
     .msg-content {
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.5;
       color: var(--text-body);
     }
 
     .msg-ai .msg-content {
       color: var(--text-secondary);
+    }
+
+    .msg-content em {
+      color: var(--text-muted);
+      font-style: italic;
     }
 
     /* Main content */
@@ -235,7 +337,7 @@
 
     /* Sections */
     .section {
-      margin-bottom: 64px;
+      margin-bottom: 56px;
     }
 
     .section:last-child {
@@ -243,15 +345,14 @@
     }
 
     h2 {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 16px;
-      padding-top: 8px;
     }
 
     h3 {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
       color: var(--text-primary);
       margin-top: 32px;
@@ -259,7 +360,7 @@
     }
 
     h4 {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text-primary);
       margin-top: 24px;
@@ -278,14 +379,14 @@
     .note {
       background: var(--accent-subtle);
       border-left: 3px solid var(--accent);
-      padding: 16px 20px;
-      margin: 24px 0;
+      padding: 14px 18px;
+      margin: 20px 0;
       border-radius: 0 6px 6px 0;
     }
 
     .note p {
       margin: 0;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .note strong {
@@ -295,14 +396,14 @@
     .warning {
       background: var(--warning-bg);
       border-left: 3px solid var(--warning);
-      padding: 16px 20px;
-      margin: 24px 0;
+      padding: 14px 18px;
+      margin: 20px 0;
       border-radius: 0 6px 6px 0;
     }
 
     .warning p {
       margin: 0;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .warning strong {
@@ -349,68 +450,41 @@
       color: var(--text-secondary);
     }
 
-    /* Platform links */
-    .platforms {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 12px;
-      margin: 20px 0;
-    }
-
-    .platform-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
+    /* Inline example */
+    .example {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 6px;
-      color: var(--text-primary);
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.15s;
+      padding: 14px 16px;
+      margin: 16px 0;
     }
 
-    .platform-link:hover {
-      border-color: var(--border-light);
-      background: var(--bg-tertiary);
-      text-decoration: none;
-    }
-
-    .platform-link .icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
-      background: var(--bg-tertiary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    /* Image placeholder */
-    .img-placeholder {
-      background: var(--bg-secondary);
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 40px 20px;
-      text-align: center;
+    .example-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .example-text {
       font-size: 14px;
-      margin: 20px 0;
+      color: var(--text-secondary);
+      font-style: italic;
     }
 
     /* Steps */
     .steps {
       counter-reset: step;
-      margin: 24px 0;
+      margin: 20px 0;
     }
 
     .step {
       display: flex;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding-bottom: 24px;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
       border-bottom: 1px solid var(--border);
     }
 
@@ -423,14 +497,14 @@
     .step-num {
       counter-increment: step;
       flex-shrink: 0;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       background: var(--accent-subtle);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--accent);
     }
@@ -441,90 +515,66 @@
 
     .step-content h4 {
       margin-top: 0;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .step-content p {
-      font-size: 15px;
-    }
-
-    /* Inline example */
-    .example {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px;
-      margin: 16px 0;
-    }
-
-    .example-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .example-text {
       font-size: 14px;
-      color: var(--text-secondary);
-      font-style: italic;
+      margin: 0;
     }
 
-    /* Install section */
+    /* Download box */
     .download-box {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 24px;
-      margin: 24px 0;
+      padding: 20px;
+      margin: 20px 0;
     }
 
     .download-box h4 {
       margin-top: 0;
     }
 
-    /* TOC */
-    .toc {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-bottom: 48px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+      background: var(--accent);
+      color: var(--bg-primary);
     }
 
-    .toc h4 {
-      margin: 0 0 12px 0;
-      font-size: 14px;
+    .btn:hover {
+      background: var(--accent-dim);
+      text-decoration: none;
+    }
+
+    /* Research citations */
+    .cite {
+      font-size: 13px;
       color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      margin-top: 12px;
     }
 
-    .toc ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .toc li {
-      margin-bottom: 6px;
-    }
-
-    .toc a {
-      font-size: 14px;
+    .cite a {
       color: var(--text-secondary);
-    }
-
-    .toc a:hover {
-      color: var(--accent);
     }
 
     /* Footer */
     footer {
-      padding: 32px 0;
+      padding: 32px 24px;
       border-top: 1px solid var(--border);
+    }
+
+    footer .inner {
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
     footer p {
@@ -536,20 +586,20 @@
     /* Responsive */
     @media (max-width: 600px) {
       .hero {
-        padding: 40px 0 32px;
+        padding: 32px 0;
       }
 
       .hero h1 {
-        font-size: 28px;
+        font-size: 26px;
       }
 
-      .platforms {
-        grid-template-columns: 1fr;
+      .carousel-card {
+        flex: 0 0 300px;
       }
 
       .step {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
       }
     }
   </style>
@@ -557,35 +607,182 @@
 <body>
 
   <header>
-    <div class="container">
+    <div class="inner">
       <a href="/" class="logo">health<span>skills</span></a>
       <span class="byline">by <a href="https://kmunk.com">Kyle Munkittrick</a></span>
     </div>
   </header>
 
   <section class="hero">
-    <div class="container">
-      <h1>Use AI like a<br><span>clinical friend</span></h1>
-      <p class="hero-subtitle">
-        People with doctors in their social network get informal health guidance. Everyone else navigates healthcare alone. AI can close that gap—if you know how to use it.
-      </p>
-      <div class="hero-actions">
-        <a href="#basics" class="btn btn-secondary">Read the guide</a>
-        <a href="#skill" class="btn btn-primary">Get the skill</a>
+    <div class="page-wrapper">
+      <div class="sidebar"></div>
+      <div class="main-content">
+        <h1>Use AI like a<br><span>clinical friend</span></h1>
+        <p class="hero-subtitle">
+          People with doctors in their social network get informal health guidance. Everyone else navigates healthcare alone. AI can close that gap—if you know how to talk to it.
+        </p>
+        <p class="hero-links">
+          <a href="#basics">Read the guide</a> · <a href="#skill">Get the Claude skill</a>
+        </p>
       </div>
+    </div>
+  </section>
 
-      <div class="example-convo">
-        <div class="example-header">Example conversation</div>
-        <div class="example-body">
+  <section class="carousel-section">
+    <div class="page-wrapper">
+      <div class="sidebar"></div>
+      <div class="main-content">
+        <h2>The difference context makes</h2>
+      </div>
+    </div>
+    <div class="carousel">
+      <!-- BAD EXAMPLE -->
+      <div class="carousel-card bad">
+        <div class="card-header">
+          <span class="tag">How most people use AI</span>
+        </div>
+        <div class="card-body">
           <div class="msg msg-user">
             <div class="msg-label">You</div>
-            <div class="msg-content">My ankle's been hurting for 3 days after I rolled it hiking. Still swollen, hurts to put weight on it. Should I see someone?</div>
+            <div class="msg-content">How do I know if I have a migraine?</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">AI</div>
+            <div class="msg-content">Migraines typically involve: moderate to severe throbbing pain, usually on one side of the head; sensitivity to light and sound; nausea or vomiting; visual disturbances called "aura" (flashing lights, blind spots); pain lasting 4-72 hours...<br><br>If you're experiencing these symptoms, you may want to consult a healthcare provider for proper diagnosis.</div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">Ok thanks</div>
+          </div>
+          <div class="msg" style="padding: 12px; background: var(--bad-bg); border-radius: 6px; margin-top: 16px;">
+            <div style="font-size: 12px; color: var(--bad); font-weight: 500;">What went wrong</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Generic question → generic answer. No follow-up. No context. You leave with a Wikipedia summary instead of actual thinking about your situation.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOOD EXAMPLE 1: Clinical friend probing -->
+      <div class="carousel-card good">
+        <div class="card-header">
+          <span class="tag">Clinical friend approach</span>
+          <span class="title">Same question, different response</span>
+        </div>
+        <div class="card-body">
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">How do I know if I have a migraine?</div>
           </div>
           <div class="msg msg-ai">
             <div class="msg-label">Claude</div>
-            <div class="msg-content">Three days of swelling and pain with weight-bearing after a rolled ankle—let's think through this. The fact that you can put <em>some</em> weight on it is actually reassuring (complete inability usually means something more serious). But persistent swelling and pain at day 3 suggests this isn't just a minor twist.<br><br>
-            <strong>Possibilities to consider:</strong> Grade 1-2 sprain (most likely), small avulsion fracture (chip where a ligament pulled), or less commonly a hairline fracture. The Ottawa ankle rules doctors use: if you can take 4 steps and there's no bone tenderness at specific spots, fracture is unlikely.<br><br>
-            <strong>What I'd tell a friend:</strong> This probably doesn't need the ER, but I'd get it looked at within a few days—urgent care or your PCP. An X-ray would rule out fracture and give you peace of mind. Until then: RICE (rest, ice, compression, elevation), NSAIDs if you can take them.</div>
+            <div class="msg-content">Before I give you a textbook answer—what's prompting the question? Are you having headaches now that feel different? Or looking back at something and wondering?<br><br>Migraines are actually pretty complex, and the pattern matters more than any single symptom. Tell me what's going on.</div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">Yeah I've been getting these really bad headaches maybe twice a month. They're like... pounding? And I get kind of nauseous. My mom gets migraines so I'm wondering if that's what this is.</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">The family history is relevant—migraines do run in families. A few more questions to help think through this:<br><br>When these hit, how long do they last? Hours, a day, longer?<br><br>Do you notice anything before they start—changes in vision, feeling off, weird smells?<br><br>Where's the pain—one side, both, behind your eyes?<br><br>And does anything help—dark room, sleep, ibuprofen?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOOD EXAMPLE 2: With context/memory -->
+      <div class="carousel-card good">
+        <div class="card-header">
+          <span class="tag">With your health context</span>
+          <span class="title">When AI knows your history</span>
+        </div>
+        <div class="card-body">
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content"><em>I see from your health baseline that you have a history of tension headaches, take Lexapro for anxiety, and mentioned you tend to avoid doctors. Your mom has migraines.</em></div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">I've been getting these really bad headaches lately, different from my usual ones.</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Different from your usual tension headaches—that's worth paying attention to. Tell me more about "different." Is it the location, the intensity, or does it come with things your regular headaches don't?<br><br>Given your family history, I'm already thinking about whether these could be migraines emerging. They can show up at any age, and sometimes SSRIs like Lexapro can affect headache patterns (either direction).<br><br>How long have these new ones been happening?</div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">Maybe 6 weeks? They're more like throbbing on one side and I feel kind of sick</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Six weeks of new-pattern headaches that are unilateral and throbbing with nausea—that's textbook migraine presentation. Given that this is a change from your baseline and your doctor-avoidant tendency, I want to be direct: this warrants a visit.<br><br>Not because it's scary—new-onset migraines are common and manageable—but because migraines have good treatments you can't get without a prescription. A neurologist or even your PCP can help.<br><br>Would it help to prep what to tell them so you get the most out of a short appointment?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOOD EXAMPLE 3: Pre-visit prep -->
+      <div class="carousel-card good">
+        <div class="card-header">
+          <span class="tag">Pre-visit prep</span>
+          <span class="title">Getting ready for an appointment</span>
+        </div>
+        <div class="card-body">
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">I have a dermatology appointment Thursday about this mole. It's changed over the last few months—darker, maybe bigger. I'm kind of freaked out.</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Good that you made the appointment—changed moles should be looked at, and you're doing the right thing.<br><br>A few things to have ready:<br><br><strong>What they'll want to know:</strong><br>• When did you first notice the change?<br>• Has it changed color, size, shape, or texture?<br>• Any itching, bleeding, or crusting?<br>• Your sun exposure history and any bad burns<br>• Family history of melanoma or skin cancer<br><br><strong>Worth asking them:</strong><br>• What do you see? (They might not volunteer this)<br>• Do you recommend a biopsy or just monitoring?<br>• If monitoring, what changes should bring me back sooner?<br><br>It's okay to be freaked out. Most changed moles turn out to be nothing concerning. But even if this one needs attention, you're catching it early, which is exactly what you want.</div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">What's the biopsy like if they do one?</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Usually quick and not a big deal—they numb the area with local anesthetic (a small pinch), then either shave off the top layer or punch out a tiny core. Takes a few minutes. The waiting for results (typically a week) is honestly the hard part.<br><br>You'll have a small wound that heals over 1-2 weeks. Some leave a small scar, depending on location and method. Worth asking them which approach they'd use for your specific spot.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOOD EXAMPLE 4: Ongoing mystery -->
+      <div class="carousel-card good">
+        <div class="card-header">
+          <span class="tag">Ongoing mystery</span>
+          <span class="title">Systematic thinking together</span>
+        </div>
+        <div class="card-body">
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">I've had this fatigue for about 2 months. Not tired-sleepy, more like no energy even after rest. Blood work came back "normal" according to my doctor but I still feel awful.</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">"Normal" blood work with persistent fatigue is frustrating—you know something's off but the obvious tests didn't catch it. Let's think through this systematically.<br><br>First: do you know what was actually tested? "Standard blood work" varies a lot. Usually it's CBC, metabolic panel, maybe thyroid. But there are common fatigue causes those don't catch.</div>
+          </div>
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">I think it was CBC and metabolic panel. Maybe thyroid? I can check the patient portal.</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Yeah, pull that up if you can—I can help you read it. "Normal" sometimes means "within range" but not optimal for you.<br><br>Things worth checking that basic panels miss:<br>• Vitamin D (very common deficiency, classic fatigue cause)<br>• B12 (especially if you're vegetarian or on certain meds)<br>• Ferritin (iron stores—can be low even with normal hemoglobin)<br>• More detailed thyroid (TSH alone can miss subclinical issues)<br><br>While you look: any other symptoms? Brain fog, muscle aches, mood changes, sleep quality, appetite, weight changes? Sometimes what seems like one thing is actually a pattern.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOOD EXAMPLE 5: Understanding results -->
+      <div class="carousel-card good">
+        <div class="card-header">
+          <span class="tag">Understanding results</span>
+          <span class="title">Making sense of test data</span>
+        </div>
+        <div class="card-body">
+          <div class="msg msg-user">
+            <div class="msg-label">You</div>
+            <div class="msg-content">Got my blood work back. Doctor said it's fine but some things are flagged. My vitamin D is 18 ng/mL (flagged low), TSH is 4.2 mIU/L (in range but high end), and ferritin is 22 ng/mL (in range). Does any of this explain why I'm so tired?</div>
+          </div>
+          <div class="msg msg-ai">
+            <div class="msg-label">Claude</div>
+            <div class="msg-content">Yes, actually—this looks like a plausible explanation, even though only one is flagged.<br><br><strong>Vitamin D at 18:</strong> This is legitimately low. Under 20 is deficiency, and many people don't feel well until they're 40-60+. This alone can cause significant fatigue, brain fog, and muscle weakness. Easy fix with supplementation.<br><br><strong>Ferritin at 22:</strong> Technically "in range" but that range is wide. Many doctors consider under 30-50 suboptimal, especially for fatigue. If you're menstruating, this could be slowly draining your iron stores.<br><br><strong>TSH at 4.2:</strong> Normal range goes up to ~4.5, but some people feel hypothyroid above 2.5-3. Worth watching, especially with the fatigue picture.<br><br>All three together? You've probably found your answer—or at least a big piece of it.<br><br>Worth asking your doctor about D supplementation (usually 2000-5000 IU daily to start) and whether they'd consider a trial of iron given your ferritin.</div>
           </div>
         </div>
       </div>
@@ -593,332 +790,181 @@
   </section>
 
   <main>
-    <div class="container">
-
-      <nav class="toc">
-        <h4>On this page</h4>
-        <ul>
-          <li><a href="#why">Why this works</a></li>
-          <li><a href="#basics">The basics</a></li>
-          <li><a href="#context">Building your health context</a></li>
-          <li><a href="#scenarios">Common scenarios</a></li>
-          <li><a href="#skill">The skill (optional)</a></li>
-          <li><a href="#limits">Know the limits</a></li>
-        </ul>
-      </nav>
-
-      <!-- WHY THIS WORKS -->
-      <section id="why" class="section">
-        <h2>Why this works</h2>
-        <p>
-          Modern AI models know a lot of medicine. They've trained on textbooks, research papers, and clinical guidelines. But most people use them like a search engine—one-off questions with no context.
-        </p>
-        <p>
-          A doctor friend doesn't give you better advice because they know more medicine. They give you better advice because they know <em>you</em>: your history, your tendencies, how you relate to your health. That context changes everything.
-        </p>
-        <p>
-          The AI already has the medical knowledge. This guide teaches you how to give it the context it needs to use that knowledge well.
-        </p>
-
-        <div class="note">
-          <p><strong>This isn't diagnosis.</strong> AI helps you think through possibilities, prepare for appointments, and understand what questions to ask. It doesn't replace a doctor who can actually examine you.</p>
+    <div class="page-wrapper">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h4>On this page</h4>
+          <ul>
+            <li><a href="#why">Why this works</a></li>
+            <li><a href="#basics">The basics</a></li>
+            <li><a href="#context">Build your context</a></li>
+            <li><a href="#skill">The skill</a></li>
+            <li><a href="#limits">Know the limits</a></li>
+          </ul>
         </div>
-      </section>
+      </aside>
 
-      <!-- THE BASICS -->
-      <section id="basics" class="section">
-        <h2>The basics</h2>
-        <p>These practices work with any AI—Claude, ChatGPT, or Gemini. No special tools required.</p>
+      <div class="main-content">
 
-        <h3>1. Sign in and stick with one AI</h3>
-        <p>
-          Context is key to good care. Pick an AI and sign in so it can remember you across conversations. You don't need a separate "health app"—those are more likely to be scams or have weaker models. Trust the big labs.
-        </p>
-        <p>
-          <strong>We recommend Claude</strong> because it's willing to engage substantively with health questions. But ChatGPT and Gemini work too.
-        </p>
-        <div class="platforms">
-          <a href="https://claude.ai" class="platform-link" target="_blank">
-            <span class="icon">C</span>
-            Claude
-          </a>
-          <a href="https://chat.openai.com" class="platform-link" target="_blank">
-            <span class="icon">G</span>
-            ChatGPT
-          </a>
-          <a href="https://gemini.google.com" class="platform-link" target="_blank">
-            <span class="icon">G</span>
-            Gemini
-          </a>
-        </div>
+        <!-- WHY THIS WORKS -->
+        <section id="why" class="section">
+          <h2>Why this works</h2>
+          <p>
+            A doctor friend doesn't give you better advice because they know more medicine than the internet. They give you better advice because they know <em>you</em>—your history, your tendencies, how you relate to your health—and they can have a real conversation. They ask questions. They push back. They say "that doesn't sound right" or "you should actually get that checked."
+          </p>
+          <p>
+            Modern AI can do this. Anthropic's own guidelines describe Claude as "<a href="https://gist.github.com/Richard-Weiss/efe157692991535403bd7e7fb20b6695" target="_blank">a brilliant friend who happens to have the knowledge of a doctor, lawyer, financial advisor</a>." A friend who "gives you real information based on your specific situation rather than overly cautious advice driven by fear of liability."
+          </p>
+          <p>
+            The research backs this up. <a href="https://time.com/7299314/microsoft-ai-better-than-doctors-diagnosis/" target="_blank">Recent studies</a> show AI matching or exceeding physician-level diagnostic accuracy on complex cases. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12161448/" target="_blank">Claude specifically</a> scores at the top of medical benchmarks, with 98%+ accuracy on clinical diagnosis tasks in controlled studies.
+          </p>
+          <p>
+            But here's the thing: those studies give the AI complete information. In the real world, most people ask one-shot questions with no context, like talking to a stranger. They get generic answers because they asked generic questions.
+          </p>
+          <p>
+            <strong>The trick is to actually talk to it.</strong> Give it context. Let it ask you questions. Have a back-and-forth. The AI already has the medical knowledge—this guide teaches you how to give it the context it needs to use that knowledge well.
+          </p>
 
-        <h3>2. Use projects to organize</h3>
-        <p>
-          Most AI apps let you create dedicated spaces that persist across conversations. Use one for health. This keeps your health conversations together and lets the AI reference past context.
-        </p>
-        <div class="platforms">
-          <a href="https://support.anthropic.com/en/articles/9517075-what-are-projects" class="platform-link" target="_blank">
-            <span class="icon">C</span>
-            Claude Projects
-          </a>
-          <a href="https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt" class="platform-link" target="_blank">
-            <span class="icon">G</span>
-            ChatGPT Projects
-          </a>
-          <a href="https://support.google.com/gemini/answer/14575317" class="platform-link" target="_blank">
-            <span class="icon">G</span>
-            Gemini Gems
-          </a>
-        </div>
-        <p>
-          Create a project called "Health" (or whatever you like). This becomes your dedicated space for all health conversations.
-        </p>
+          <div class="note">
+            <p><strong>This isn't diagnosis.</strong> AI helps you think through possibilities, prepare for appointments, and understand what questions to ask. It doesn't replace a doctor who can actually examine you.</p>
+          </div>
+        </section>
 
-        <h3>3. Be detailed—tell the story</h3>
-        <p>
-          "My foot hurts" gets you generic advice. The more context you give, the more specific the AI can be.
-        </p>
+        <!-- THE BASICS -->
+        <section id="basics" class="section">
+          <h2>The basics</h2>
+          <p>These practices work with any AI—<a href="https://claude.ai" target="_blank">Claude</a>, <a href="https://chat.openai.com" target="_blank">ChatGPT</a>, or <a href="https://gemini.google.com" target="_blank">Gemini</a>. No special tools required.</p>
 
-        <div class="example">
-          <div class="example-label">Instead of this</div>
-          <div class="example-text">"My foot hurts, what should I do?"</div>
-        </div>
+          <h3>1. Sign in and stick with one AI</h3>
+          <p>
+            Context is key to good care. Pick an AI and sign in so it can remember you across conversations. You don't need a separate "health app"—those are more likely to be scams or have weaker models. Trust the big labs.
+          </p>
+          <p>
+            We recommend <a href="https://claude.ai" target="_blank">Claude</a> because it's designed to engage substantively with hard questions rather than hedge everything. But ChatGPT and Gemini work too.
+          </p>
 
-        <div class="example">
-          <div class="example-label">Try this</div>
-          <div class="example-text">"So the other day I was hiking and rolled my ankle on some rocks. It swelled up that night and I iced it. Now three days later it still hurts when I put weight on it, especially in the morning. The swelling went down but it's still puffy. I've been walking on it but it aches."</div>
-        </div>
+          <h3>2. Use projects to keep context</h3>
+          <p>
+            Most AI apps let you create dedicated spaces that persist across conversations. Use one for health—it keeps your conversations together and lets the AI reference past context.
+          </p>
+          <ul>
+            <li><a href="https://support.anthropic.com/en/articles/9517075-what-are-projects" target="_blank">Claude Projects</a> — best for this use case</li>
+            <li><a href="https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt" target="_blank">ChatGPT Projects</a></li>
+            <li><a href="https://support.google.com/gemini/answer/14575317" target="_blank">Gemini Gems</a></li>
+          </ul>
 
-        <p>
-          Tell the story like you would to a friend who happens to be a doctor. Include: when it started, what happened, how it's changed, what you've tried, what makes it better or worse.
-        </p>
+          <h3>3. Tell the story, don't just ask the question</h3>
+          <p>
+            "My foot hurts" gets you WebMD. "I rolled my ankle hiking three days ago, it swelled up that night, and it still hurts when I put weight on it" gets you actual thinking.
+          </p>
+          <p>
+            Talk to it like you'd talk to a friend who's a doctor. Include: when it started, what happened, how it's changed, what you've tried, what makes it better or worse.
+          </p>
 
-        <h3>4. Be honest about your biases</h3>
-        <p>
-          Your relationship with healthcare affects what advice is actually useful to you. Tell the AI:
-        </p>
-        <ul>
-          <li><strong>"I tend to avoid doctors"</strong> — means AI should be more direct about when to actually go</li>
-          <li><strong>"I'm a bit of a hypochondriac"</strong> — means AI should help calibrate worry appropriately</li>
-          <li><strong>"I like to try home remedies first"</strong> — means AI should know your preference while flagging when that's not enough</li>
-          <li><strong>"I have health anxiety"</strong> — means AI should be thoughtful about how it presents possibilities</li>
-        </ul>
-        <p>
-          This context changes how the AI should respond to you. A suggestion to "see a doctor" means different things to someone who goes at every twinge vs. someone who hasn't been in years.
-        </p>
+          <h3>4. Be honest about who you are</h3>
+          <p>
+            Your relationship with healthcare affects what advice is useful. Tell the AI:
+          </p>
+          <ul>
+            <li><strong>"I tend to avoid doctors"</strong> — AI should be more direct about when to actually go</li>
+            <li><strong>"I'm a bit of a hypochondriac"</strong> — AI should help calibrate worry appropriately</li>
+            <li><strong>"I have health anxiety"</strong> — AI should be thoughtful about how it presents possibilities</li>
+          </ul>
+          <p>
+            A suggestion to "see a doctor" means very different things to someone who goes at every twinge vs. someone who hasn't been in years.
+          </p>
 
-        <h3>5. Tell it what you already know</h3>
-        <p>
-          If you've already researched something, say so. If you have a theory, share it. If you're worried about something specific, name it.
-        </p>
-        <div class="example">
-          <div class="example-label">Example</div>
-          <div class="example-text">"I've been having these headaches for a few weeks. I've been reading about tension headaches vs migraines. I'm pretty sure it's tension-related because they feel like pressure around my forehead and get worse when I'm stressed. But I'm a little worried because my mom had high blood pressure. Can you help me think through this?"</div>
-        </div>
-        <p>
-          Starting with what you know lets the AI build on your thinking rather than starting from scratch.
-        </p>
-      </section>
+          <h3>5. Let it interview you</h3>
+          <p>
+            Don't just ask and accept the first answer. Good clinical thinking is iterative. If the AI doesn't ask follow-up questions, prompt it: "What else would help you think through this?" or "What questions would a doctor ask?"
+          </p>
+          <p>
+            The back-and-forth is where the value is. One-shot questions get one-shot answers.
+          </p>
+        </section>
 
-      <!-- BUILDING YOUR HEALTH CONTEXT -->
-      <section id="context" class="section">
-        <h2>Building your health context</h2>
-        <p>
-          The single most valuable thing you can do: spend 10-15 minutes giving the AI your health background. Do this once, save it to your project. Every future conversation benefits.
-        </p>
+        <!-- BUILDING YOUR HEALTH CONTEXT -->
+        <section id="context" class="section">
+          <h2>Build your health context</h2>
+          <p>
+            The single most valuable thing you can do: spend 10-15 minutes giving the AI your health background. Do this once, save it to your project. Every future conversation benefits.
+          </p>
 
-        <h3>What to include</h3>
+          <h3>What to include</h3>
+          <ul>
+            <li><strong>Basics:</strong> Age, sex, height, weight, where you live</li>
+            <li><strong>Medical history:</strong> Current diagnoses, past surgeries, significant conditions (even resolved), allergies</li>
+            <li><strong>Medications:</strong> Prescriptions with doses, regular OTC meds, supplements</li>
+            <li><strong>Family history:</strong> Parents' and siblings' major conditions, patterns (heart disease, cancer, diabetes)</li>
+            <li><strong>Lifestyle:</strong> Exercise, diet, sleep, alcohol/tobacco/cannabis, stress level</li>
+            <li><strong>Your tendencies:</strong> Avoider or worrier? Natural remedy preference? How you like to receive information?</li>
+          </ul>
 
-        <h4>Basic info</h4>
-        <ul>
-          <li>Age, sex, height, weight</li>
-          <li>Where you live (climate, altitude, relevant exposures)</li>
-          <li>Occupation (physical demands, stress level, exposures)</li>
-        </ul>
+          <h3>How to do it</h3>
+          <p>
+            Start a conversation in your health project. Say: "I want to give you my health background so you have context for future conversations. Can you interview me to build a complete picture?"
+          </p>
+          <p>
+            Let it guide you. Answer naturally—don't worry about medical terminology. When done, ask it to summarize what it learned and save that summary to your project's knowledge base or instructions.
+          </p>
 
-        <h4>Medical history</h4>
-        <ul>
-          <li>Current diagnoses (diabetes, asthma, etc.)</li>
-          <li>Past surgeries or hospitalizations</li>
-          <li>Significant past conditions (even if resolved)</li>
-          <li>Allergies (medications, foods, environmental)</li>
-        </ul>
+          <div class="note">
+            <p><strong>Use your actual records.</strong> Most health systems let you download your medical records as a PDF from patient portals like MyChart. You can upload these directly to your health project for the most accurate context.</p>
+          </div>
 
-        <h4>Current medications</h4>
-        <ul>
-          <li>Prescription medications with doses</li>
-          <li>Regular OTC medications (daily aspirin, antacids, etc.)</li>
-          <li>Supplements you take consistently</li>
-        </ul>
+          <h3>Privacy</h3>
+          <p>
+            Yes, you're sharing health information with an AI company. You can share as much or as little as you're comfortable with—even basic context helps. For Claude specifically, <a href="https://support.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data" target="_blank">conversations are not used for training by default</a>.
+          </p>
+        </section>
 
-        <h4>Family history</h4>
-        <ul>
-          <li>Parents' major health conditions</li>
-          <li>Siblings' major health conditions</li>
-          <li>Any patterns (heart disease, cancer, diabetes running in the family)</li>
-        </ul>
+        <!-- THE SKILL -->
+        <section id="skill" class="section">
+          <h2>The skill (Claude only)</h2>
+          <p>
+            If you use Claude, you can install a custom skill that nudges it to automatically do the things described above. It doesn't add capabilities—it adds reminders and structure.
+          </p>
 
-        <h4>Lifestyle context</h4>
-        <ul>
-          <li>Exercise habits</li>
-          <li>Diet patterns (vegetarian, low-carb, etc.)</li>
-          <li>Sleep patterns</li>
-          <li>Alcohol, tobacco, cannabis use</li>
-          <li>Stress level and sources</li>
-        </ul>
+          <h3>What it does</h3>
+          <ul>
+            <li>Reminds Claude to check what context it has (and tell you what's missing)</li>
+            <li>Anchors on your need type—acute symptom, ongoing mystery, chronic condition, pre-visit prep</li>
+            <li>Encourages going right up to the line, not vague hand-waving</li>
+            <li>Teaches you how to use AI better as you go</li>
+          </ul>
 
-        <h4>Your healthcare personality</h4>
-        <ul>
-          <li>Your tendencies (avoider vs. worrier vs. proactive)</li>
-          <li>Your preferences (natural remedies, minimal intervention, etc.)</li>
-          <li>Your concerns or health anxieties</li>
-          <li>How you prefer to receive information (direct, gentle, detailed, high-level)</li>
-        </ul>
+          <div class="download-box">
+            <h4>Download</h4>
+            <p>Works with Claude Desktop (macOS/Windows) and Claude.ai (web). Under 2KB.</p>
+            <a href="https://github.com/kmunki/health-skills/raw/master/skills/health-assistant.zip" class="btn" style="margin-top: 12px;">
+              Download health-assistant.zip
+            </a>
+          </div>
 
-        <h3>How to do this</h3>
+          <h3>Installation</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num"></div>
+              <div class="step-content">
+                <h4>Add to Claude</h4>
+                <p><strong>Desktop:</strong> Settings → Features → Skills → Add Skill<br>
+                <strong>Web:</strong> Profile → Settings → Skills → Add Skill</p>
+              </div>
+            </div>
 
-        <div class="steps">
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Start a conversation in your health project</h4>
-              <p>Say something like: "I want to give you my health background so you have context for future conversations. Can you ask me questions to build a complete picture?"</p>
+            <div class="step">
+              <div class="step-num"></div>
+              <div class="step-content">
+                <h4>Create a health project</h4>
+                <p>Start a new project called "Health" (or whatever). The skill activates automatically when you ask health questions.</p>
+              </div>
             </div>
           </div>
 
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Let the AI guide you</h4>
-              <p>Answer its questions naturally. Don't worry about medical terminology—just explain things as you understand them.</p>
-            </div>
-          </div>
+          <h3>What's in it</h3>
+          <p>The skill is just a text file with instructions. No black boxes. <a href="https://github.com/kmunki/health-skills" target="_blank">View the source</a> or read it below:</p>
 
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Save the summary</h4>
-              <p>Ask the AI to summarize what it learned. Copy this into your project's instructions or knowledge base, so every new conversation starts with this context.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="note">
-          <p><strong>Use your actual records.</strong> Most health systems let you download your medical records as a PDF. Patient portals (MyChart, etc.) often have a "download records" option. You can upload these directly to your health project for the most accurate context.</p>
-        </div>
-
-        <h3>Privacy considerations</h3>
-        <p>
-          Yes, you're sharing health information with an AI company. Consider:
-        </p>
-        <ul>
-          <li>Claude, ChatGPT, and Gemini all have privacy policies. Read them if you're concerned.</li>
-          <li>You can share as much or as little as you're comfortable with. Even basic context helps.</li>
-          <li>For Claude specifically: conversations are not used for training by default. See <a href="https://support.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data" target="_blank">Anthropic's privacy info</a>.</li>
-        </ul>
-      </section>
-
-      <!-- COMMON SCENARIOS -->
-      <section id="scenarios" class="section">
-        <h2>Common scenarios</h2>
-        <p>Different health concerns need different approaches.</p>
-
-        <h3>Acute symptoms</h3>
-        <p><em>"I woke up with X" / "This just started"</em></p>
-        <p>Focus: What is it, how severe, what to do right now. The AI should help you triage—urgent vs. can wait vs. home care.</p>
-        <div class="example">
-          <div class="example-label">Example prompt</div>
-          <div class="example-text">"I woke up with a red, swollen eye. It's watery and a little crusty. No pain but it's itchy. Started this morning. Should I see someone today or can this wait?"</div>
-        </div>
-
-        <h3>Ongoing mysteries</h3>
-        <p><em>"This has been going on for weeks/months"</em></p>
-        <p>Focus: Pattern recognition, what's been tried, what would clarify. The AI should help you think systematically about possibilities.</p>
-        <div class="example">
-          <div class="example-label">Example prompt</div>
-          <div class="example-text">"I've had this fatigue for about 2 months. Not tired-sleepy, more like no energy even after rest. Blood work came back normal according to my doctor. What else could this be? What should I ask about?"</div>
-        </div>
-
-        <h3>Chronic conditions</h3>
-        <p><em>"I'm managing X and trying to optimize"</em></p>
-        <p>Focus: Optimization, flare management, working with your care team. The AI should support your ongoing management, not try to solve it.</p>
-        <div class="example">
-          <div class="example-label">Example prompt</div>
-          <div class="example-text">"I have Type 2 diabetes, managed with metformin. My A1C has been creeping up the last two tests (from 6.8 to 7.1). I haven't changed much. What questions should I be asking my doctor? What might explain the drift?"</div>
-        </div>
-
-        <h3>Pre-visit prep</h3>
-        <p><em>"I have an appointment coming up"</em></p>
-        <p>Focus: Clarifying your concerns, anticipating questions, prioritizing what to cover in limited time.</p>
-        <div class="example">
-          <div class="example-label">Example prompt</div>
-          <div class="example-text">"I have a dermatology appointment Thursday for this mole I'm worried about. It's changed color over the past few months. What should I make sure to tell them? What will they probably want to know? What questions should I ask?"</div>
-        </div>
-
-        <h3>Understanding results</h3>
-        <p><em>"I got test results and don't understand them"</em></p>
-        <p>Focus: Explaining what the numbers mean, what's normal vs. concerning, what follow-up might be needed.</p>
-        <div class="example">
-          <div class="example-label">Example prompt</div>
-          <div class="example-text">"I got blood work back and my doctor said everything's fine, but I see some things flagged as out of range. Can you help me understand what these mean? [paste results]"</div>
-        </div>
-      </section>
-
-      <!-- THE SKILL -->
-      <section id="skill" class="section">
-        <h2>The skill (optional)</h2>
-        <p>
-          If you use Claude, you can install a custom skill that nudges Claude to automatically do the things described above. It doesn't add capabilities—it adds reminders and structure.
-        </p>
-
-        <h3>What it does</h3>
-        <ul>
-          <li>Reminds Claude to check what context it has (and tell you what's missing)</li>
-          <li>Anchors on your specific need type—acute, ongoing, chronic, pre-visit</li>
-          <li>Encourages going right up to the line, not vague hand-waving</li>
-          <li>Teaches you how to use AI better as you go</li>
-        </ul>
-
-        <div class="download-box">
-          <h4>Download</h4>
-          <p>Works with Claude Desktop (macOS/Windows) and Claude.ai (web).</p>
-          <a href="https://github.com/kmunki/health-skills/raw/master/skills/health-assistant.zip" class="btn btn-primary" style="margin-top: 12px;">
-            Download health-assistant.zip
-          </a>
-        </div>
-
-        <h3>Installation</h3>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Download the skill</h4>
-              <p>Click the button above. It's a small zip file (under 2KB).</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Add to Claude</h4>
-              <p><strong>Claude Desktop:</strong> Settings → Features → Skills → Add Skill → Upload the zip<br>
-              <strong>Claude.ai:</strong> Click your profile → Settings → Skills → Add Skill → Upload the zip</p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-num"></div>
-            <div class="step-content">
-              <h4>Create a health project</h4>
-              <p>Start a new project and name it "Health" (or whatever you like). The skill will activate automatically when you ask health questions.</p>
-            </div>
-          </div>
-        </div>
-
-        <h3>What's in it</h3>
-        <p>The skill is just a text file with instructions. No black boxes. You can <a href="https://github.com/kmunki/health-skills" target="_blank">view the source</a> or read the full contents below:</p>
-
-        <pre><code># Health Assistant
+          <pre><code># Health Assistant
 
 You're a world-class clinician with decades of experience
 —texting a dear friend. You know a lot, can help with
@@ -944,51 +990,49 @@ Pre-visit prep → Advocate prep mindset
 ## Meta: Help Them Use AI Better
 Teach them: projects, memory, baselines.
 Make every future conversation better.</code></pre>
-      </section>
+        </section>
 
-      <!-- KNOW THE LIMITS -->
-      <section id="limits" class="section">
-        <h2>Know the limits</h2>
+        <!-- KNOW THE LIMITS -->
+        <section id="limits" class="section">
+          <h2>Know the limits</h2>
 
-        <div class="warning">
-          <p><strong>Not for emergencies.</strong> Chest pain, stroke symptoms (face drooping, arm weakness, speech difficulty), breathing difficulty, severe bleeding, or anything that feels like "something is really wrong"—call 911 or go to the ER. Do not chat with AI.</p>
-        </div>
+          <div class="warning">
+            <p><strong>Not for emergencies.</strong> Chest pain, stroke symptoms (face drooping, arm weakness, speech difficulty), breathing difficulty, severe bleeding, or anything that feels like "something is really wrong"—call 911 or go to the ER. Do not chat with AI.</p>
+          </div>
 
-        <h3>What AI can't do</h3>
-        <ul>
-          <li><strong>Examine you.</strong> A doctor can feel, press, listen, look closely. AI only has what you describe.</li>
-          <li><strong>Run tests.</strong> Blood work, imaging, and other diagnostics require a healthcare system.</li>
-          <li><strong>Diagnose.</strong> "Possibilities to consider" is different from "you have X." Diagnosis requires examination and often testing.</li>
-          <li><strong>Prescribe.</strong> Prescription medications require a licensed provider.</li>
-          <li><strong>Handle emergencies.</strong> AI is not trained for emergency triage. When in doubt, call a human.</li>
-        </ul>
+          <h3>What AI can't do</h3>
+          <ul>
+            <li><strong>Examine you.</strong> A doctor can feel, press, listen, look closely. AI only has what you describe.</li>
+            <li><strong>Run tests.</strong> Blood work, imaging, diagnostics require a healthcare system.</li>
+            <li><strong>Diagnose.</strong> "Possibilities to consider" is different from "you have X."</li>
+            <li><strong>Prescribe.</strong> Prescription medications require a licensed provider.</li>
+          </ul>
 
-        <h3>What AI can do</h3>
-        <ul>
-          <li><strong>Help you think.</strong> Work through possibilities, consider what else to look for, understand trade-offs.</li>
-          <li><strong>Prepare you for appointments.</strong> Clarify your concerns, anticipate questions, suggest what to mention.</li>
-          <li><strong>Explain medical concepts.</strong> Help you understand conditions, tests, treatments, and options.</li>
-          <li><strong>Provide a sounding board.</strong> Talk through decisions, weigh options, think out loud.</li>
-          <li><strong>Remember your context.</strong> With proper setup, reference your history in every conversation.</li>
-        </ul>
+          <h3>What AI can do</h3>
+          <ul>
+            <li><strong>Help you think.</strong> Work through possibilities, consider what else to look for.</li>
+            <li><strong>Prepare you for appointments.</strong> Clarify concerns, anticipate questions, prioritize.</li>
+            <li><strong>Explain medical concepts.</strong> Help you understand conditions, tests, treatments.</li>
+            <li><strong>Remember your context.</strong> Reference your history in every conversation.</li>
+          </ul>
 
-        <h3>The goal</h3>
-        <p>
-          AI helps you work <em>with</em> doctors better, not avoid them. It helps you show up prepared, ask better questions, and understand what you're told. It closes the gap between people who have clinical friends and people who don't.
-        </p>
-        <p>
-          That's it. That's the whole thing.
-        </p>
-      </section>
+          <h3>The goal</h3>
+          <p>
+            AI helps you work <em>with</em> doctors better, not avoid them. It helps you show up prepared, ask better questions, and understand what you're told.
+          </p>
+          <p>
+            That's the whole thing. Close the gap.
+          </p>
+        </section>
 
+      </div>
     </div>
   </main>
 
   <footer>
-    <div class="container">
+    <div class="inner">
       <p>
-        <a href="https://github.com/kmunki/health-skills">Source on GitHub</a> ·
-        Early development
+        <a href="https://github.com/kmunki/health-skills">Source on GitHub</a> · Early development
       </p>
     </div>
   </footer>
