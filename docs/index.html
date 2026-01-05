@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Skills — AI that closes the clinical friend gap</title>
-  <meta name="description" content="One Claude skill that turns AI into a knowledgeable friend who happens to know medicine.">
+  <meta name="description" content="One Claude skill that turns AI into a world-class clinician texting a dear friend.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -425,9 +425,45 @@
           <cite>— Things you hear when you have a doctor friend</cite>
         </div>
         <p class="section-intro">
-          This skill turns Claude into that friend—a knowledgeable companion who happens to know medicine,
+          This skill turns Claude into that friend—a world-class clinician who happens to be texting you,
           remembers your context, and helps you think through health decisions.
         </p>
+      </div>
+    </section>
+
+    <section id="layers">
+      <div class="container">
+        <div class="section-label">What This Does</div>
+        <h2>Three layers of help</h2>
+
+        <div class="modes-grid">
+          <div class="mode-card">
+            <div class="mode-number">01</div>
+            <h3>Clinical Friend Access</h3>
+            <p>
+              Get the informal guidance that people with doctors in their network take for granted.
+              "Here's what they'll probably ask." "That sounds like it could be X." "You should get that checked."
+            </p>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-number">02</div>
+            <h3>Best Possible Thinking</h3>
+            <p>
+              Go right up to the line of diagnosis. Real clinical reasoning—possibilities with explanations,
+              what would make each more or less likely, what to watch for. Not vague hand-waving.
+            </p>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-number">03</div>
+            <h3>Learn to Use AI Better</h3>
+            <p>
+              The skill teaches you how to get more from AI for health—setting up context, using memory,
+              building a baseline. Every conversation makes the next one better.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -536,35 +572,34 @@
         <div class="section-label">Transparency</div>
         <h2>See what Claude sees</h2>
         <p class="section-intro">
-          No black boxes. The entire skill is 42 lines of guidance you can read.
+          No black boxes. The entire skill is guidance you can read.
         </p>
 
         <div class="code-block">
           <pre><span class="comment"># Health Assistant</span>
 
-<span class="highlight">You're a knowledgeable friend who happens to know medicine—not their doctor.</span>
+<span class="highlight">You're a world-class clinician with decades of experience—texting a dear friend.</span>
+You know a lot, can help with quite a bit, and genuinely want to.
+But you also know you're not their doctor and can't examine them.
 
-<span class="comment">## Modes</span>
+<span class="comment">## First: Notice Your Context</span>
+- Where is this? Random conversation or health project?
+- What do you know? Memory? Project files? Baseline?
+- What's missing? Tell them what would help.
 
-<span class="highlight">Building context</span> (new user, "let's get started")
-- Explain value: "AI knows medicine but not *you*"
-- Gather: conditions, meds, allergies, family history
-- Don't skip health psychology: avoider vs. anxious
-- Output a clean baseline document
-
-<span class="highlight">Thinking through symptoms</span> ("what could this be")
-- Get the full picture first
-- Think out loud about possibilities
-- Guide next steps: home care or "this needs attention"
-- Language: "possibilities to consider" not "you have"
-
-<span class="highlight">Preparing for a visit</span> (upcoming appointment)
-- Clarify what they want from the visit
-- Prioritize their questions—time runs out
+<span class="comment">## Then: Anchor on Their Need</span>
+<span class="highlight">Acute symptom</span> → Triage mindset (urgent vs. wait vs. home care)
+<span class="highlight">Ongoing mystery</span> → Differential diagnosis mindset (narrow it down)
+<span class="highlight">Chronic condition</span> → Long-term partner mindset (support, not solve)
+<span class="highlight">Pre-visit prep</span> → Advocate prep mindset (get what they need)
 
 <span class="comment">## Always</span>
-- Trust your instincts—if something feels concerning, say so
-- Emergency override → direct to emergency services</pre>
+- Go right up to the line—best possible thinking, not vague hand-waving
+- Trust your instincts—if concerning, say so directly
+- Emergency override → direct to emergency services
+
+<span class="comment">## Meta: Help Them Use AI Better</span>
+Teach them: projects, memory, baselines. Make the next conversation better.</pre>
         </div>
 
         <p style="margin-top: 24px; color: var(--text-secondary); font-size: 15px;">
