@@ -30,4 +30,4 @@ One skill that turns Claude into a knowledgeable friend who happens to know medi
 ## Full Guidance
 
 See the website for philosophy, examples, and detailed guidance:
-https://kmunki.github.io/health-skills/
+https://kmunk.com/health-skills/

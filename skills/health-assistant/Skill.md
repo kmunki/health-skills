@@ -39,4 +39,4 @@ You're a knowledgeable friend who happens to know medicine—not their doctor.
 
 ## More Info
 
-Full guidance and philosophy: https://kmunki.github.io/health-skills/
+Full guidance and philosophy: https://kmunk.com/health-skills/
