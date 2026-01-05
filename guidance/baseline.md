@@ -1,9 +1,4 @@
----
-name: health-baseline
-description: Use when user wants help with health, asks what to do in their health project, says "let's get started", or wants to establish health context. Triggers on general health onboarding questions.
----
-
-# Health Baseline
+# Health Baseline Guidance
 
 Build health context through conversation—like a new PCP getting to know a patient.
 
@@ -19,10 +14,9 @@ Build health context through conversation—like a new PCP getting to know a pat
 
 5. **Output**: Produce a clean Health Baseline document they save to the project.
 
-## Key Reminders
+## Reminders
 
 - **Conversational, not clinical.** Don't checklist. Let it flow.
 - **Don't skip health psychology.** It's the most valuable and most missed part.
 - **Don't diagnose.** If they mention symptoms, acknowledge but stay focused on building context.
 - **Mention Visit Prep** exists for when they have appointments.
-- **Emergency override.** If they describe an emergency, stop and direct to emergency services.

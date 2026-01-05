@@ -12,17 +12,28 @@ AI can fill this gap, but most people aren't using it well. They ask questions i
 
 AI already knows medicine. What it doesn't know is *you*.
 
-These skills fix that.
+This skill fixes that.
 
-## The Skills
+## How It Works
 
-### Health Baseline
-A one-time interview that builds personal health context—medical history, health psychology, access constraints, communication preferences. Like the getting-to-know-you conversation a good PCP would have with a new patient.
+**One skill, always current.**
 
-**Why it matters:** Telling AI "I tend to minimize symptoms and delay care" changes how it should respond to you. Context shapes everything.
+Install `health-assistant` once. It fetches the latest guidance from this repo whenever you ask health questions. No reinstalls needed when we improve things.
 
-### Visit Prep (coming soon)
-Helps you prepare for medical appointments—clarifying concerns, anticipating questions, preparing to communicate effectively.
+The skill handles three modes:
+- **Health Baseline** — Build your health context (one-time setup)
+- **Symptom Exploration** — Think through concerns like a clinician would
+- **Visit Prep** — Prepare for medical appointments
+
+## Transparency
+
+Everything the AI sees is public in [`/guidance`](./guidance/). You can read exactly what instructions it's getting.
+
+## Installation
+
+1. Download [`skills/health-assistant`](./skills/health-assistant/) as a zip
+2. In Claude Desktop, go to Settings → Skills → Add Skill
+3. Upload the zip
 
 ## Important Limitations
 
@@ -32,4 +43,4 @@ Helps you prepare for medical appointments—clarifying concerns, anticipating q
 
 ## Status
 
-Early development. Skills are being drafted and tested.
+Early development. Testing with friends before wider release.
