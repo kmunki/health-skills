@@ -1,5 +1,5 @@
 ---
-name: Health Baseline
+name: health-baseline
 description: Build personal health context through a conversational interview—like meeting a new PCP for the first time.
 ---
 

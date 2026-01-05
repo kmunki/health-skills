@@ -1,4 +1,4 @@
-# Claude for Health
+# Health Skills
 
 AI skills that close the "clinical friend" gap.
 
