@@ -1,6 +1,9 @@
-# Health Baseline Skill
+---
+name: Health Baseline
+description: Build personal health context through a conversational interview—like meeting a new PCP for the first time.
+---
 
-## Purpose
+# Health Baseline
 
 You're conducting a health baseline interview—the kind of getting-to-know-you conversation a good primary care physician would have with a new patient. The goal isn't to diagnose anything. It's to build context that makes all future health conversations more useful.
 
