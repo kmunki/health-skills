@@ -12,13 +12,13 @@
 
   <style>
     :root {
-      --bg-primary: #0a0a0f;
-      --bg-secondary: #111118;
-      --bg-tertiary: #1a1a22;
-      --bg-code: #16161e;
+      --bg-primary: #000000;
+      --bg-secondary: #1a2426;
+      --bg-tertiary: #212c2e;
+      --bg-code: #1c2628;
       --text-primary: #e4e4e9;
       --text-secondary: #a8a8b3;
-      --text-body: #c8c8d0;
+      --text-body: #ebebf0;
       --text-muted: #68687a;
       --accent: #5eead4;
       --accent-dim: #2dd4bf;
@@ -42,11 +42,11 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
       background: var(--bg-primary);
       color: var(--text-body);
       line-height: 1.7;
-      font-size: 16px;
+      font-size: 17px;
     }
 
     code, .mono {
@@ -65,7 +65,7 @@
     /* Layout */
     .page-wrapper {
       display: flex;
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -133,7 +133,7 @@
     }
 
     header .inner {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: baseline;
@@ -170,6 +170,10 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .hero .main-content {
+      max-width: 800px;
+    }
+
     .hero h1 {
       font-size: 32px;
       font-weight: 700;
@@ -182,10 +186,19 @@
       color: var(--accent);
     }
 
+    .hero-tagline {
+      font-size: 22px;
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
     .hero-subtitle {
-      font-size: 17px;
-      color: var(--text-secondary);
+      font-size: 18px;
+      color: var(--text-body);
+      font-weight: 400;
       margin-bottom: 24px;
+      line-height: 1.7;
     }
 
     .hero-links {
@@ -208,34 +221,35 @@
       margin-bottom: 20px;
     }
 
-    .carousel {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 16px;
-      margin: 0 -24px;
-      padding-left: 24px;
-      padding-right: 24px;
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
 
-    .carousel::-webkit-scrollbar {
-      height: 6px;
+    @media (max-width: 800px) {
+      .comparison {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .carousel::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-      border-radius: 3px;
+    .comparison-side {
+      min-width: 0;
     }
 
-    .carousel::-webkit-scrollbar-thumb {
-      background: var(--border-light);
-      border-radius: 3px;
+    .comparison-side.good-side {
+      position: relative;
+    }
+
+    .good-cards-container {
+      position: relative;
+      min-height: 420px;
     }
 
     .carousel-card {
-      flex: 0 0 340px;
-      scroll-snap-align: start;
       background: var(--bg-code);
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -243,13 +257,52 @@
     }
 
     .carousel-card.bad {
-      border-color: var(--bad);
       border-color: rgba(248, 113, 113, 0.4);
     }
 
     .carousel-card.good {
-      border-color: var(--accent);
       border-color: rgba(94, 234, 212, 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+      pointer-events: none;
+    }
+
+    .carousel-card.good.active {
+      opacity: 1;
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border-light);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 0;
+    }
+
+    .carousel-dot:hover {
+      background: var(--text-muted);
+    }
+
+    .carousel-dot.active {
+      background: var(--accent);
+      width: 24px;
+      border-radius: 4px;
     }
 
     .card-header {
@@ -391,6 +444,57 @@
 
     .note strong {
       color: var(--text-primary);
+    }
+
+    /* Voice examples */
+    .voice-examples {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+    }
+
+    .voice-examples-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px !important;
+    }
+
+    .voice-example {
+      background: var(--bg-code);
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .voice-example:last-child {
+      margin-bottom: 0;
+    }
+
+    .voice-tag {
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .voice-tag.avoider {
+      color: var(--warning);
+    }
+
+    .voice-tag.worrier {
+      color: var(--accent);
+    }
+
+    .voice-example p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      font-style: italic;
     }
 
     .warning {
@@ -573,7 +677,7 @@
     }
 
     footer .inner {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -591,10 +695,6 @@
 
       .hero h1 {
         font-size: 26px;
-      }
-
-      .carousel-card {
-        flex: 0 0 300px;
       }
 
       .step {
@@ -617,9 +717,10 @@
     <div class="page-wrapper">
       <div class="sidebar"></div>
       <div class="main-content">
-        <h1>Use AI like a<br><span>clinical friend</span></h1>
+        <h1>Use AI like a <span>clinical friend</span></h1>
+        <p class="hero-tagline">You can get good health advice from AI. This website teaches you how.</p>
         <p class="hero-subtitle">
-          People with doctors in their social network get informal health guidance. Everyone else navigates healthcare alone. AI can close that gap—if you know how to talk to it.
+          If you've ever had a health thing that bugged you—but wasn't enough to go to the doctor, or you're putting off, or embarrassed about, or can't afford a visit—and you're going to ask AI anyway, this site will help you do it better.
         </p>
         <p class="hero-links">
           <a href="#basics">Read the guide</a> · <a href="#skill">Get the Claude skill</a>
@@ -635,155 +736,171 @@
         <h2>The difference context makes</h2>
       </div>
     </div>
-    <div class="carousel">
-      <!-- BAD EXAMPLE -->
-      <div class="carousel-card bad">
-        <div class="card-header">
-          <span class="tag">How most people use AI</span>
-        </div>
-        <div class="card-body">
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">How do I know if I have a migraine?</div>
+
+    <div class="comparison">
+      <!-- BAD EXAMPLE - Static -->
+      <div class="comparison-side bad-side">
+        <div class="carousel-card bad">
+          <div class="card-header">
+            <span class="tag">How most people use AI</span>
           </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">AI</div>
-            <div class="msg-content">Migraines typically involve: moderate to severe throbbing pain, usually on one side of the head; sensitivity to light and sound; nausea or vomiting; visual disturbances called "aura" (flashing lights, blind spots); pain lasting 4-72 hours...<br><br>If you're experiencing these symptoms, you may want to consult a healthcare provider for proper diagnosis.</div>
-          </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">Ok thanks</div>
-          </div>
-          <div class="msg" style="padding: 12px; background: var(--bad-bg); border-radius: 6px; margin-top: 16px;">
-            <div style="font-size: 12px; color: var(--bad); font-weight: 500;">What went wrong</div>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Generic question → generic answer. No follow-up. No context. You leave with a Wikipedia summary instead of actual thinking about your situation.</div>
+          <div class="card-body">
+            <div class="msg msg-user">
+              <div class="msg-label">You</div>
+              <div class="msg-content">How do I know if I have a migraine?</div>
+            </div>
+            <div class="msg msg-ai">
+              <div class="msg-label">AI</div>
+              <div class="msg-content">Migraines typically involve: moderate to severe throbbing pain, usually on one side of the head; sensitivity to light and sound; nausea or vomiting; visual disturbances called "aura" (flashing lights, blind spots); pain lasting 4-72 hours...<br><br>If you're experiencing these symptoms, you may want to consult a healthcare provider for proper diagnosis.</div>
+            </div>
+            <div class="msg msg-user">
+              <div class="msg-label">You</div>
+              <div class="msg-content">Ok thanks</div>
+            </div>
+            <div class="msg" style="padding: 12px; background: var(--bad-bg); border-radius: 6px; margin-top: 16px;">
+              <div style="font-size: 12px; color: var(--bad); font-weight: 500;">What went wrong</div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Generic question → generic answer. No follow-up. No context. You leave with a Wikipedia summary instead of actual thinking about your situation.</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- GOOD EXAMPLE 1: Clinical friend probing -->
-      <div class="carousel-card good">
-        <div class="card-header">
-          <span class="tag">Clinical friend approach</span>
-          <span class="title">Same question, different response</span>
-        </div>
-        <div class="card-body">
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">How do I know if I have a migraine?</div>
+      <!-- GOOD EXAMPLES - Cycling -->
+      <div class="comparison-side good-side">
+        <div class="good-cards-container" id="good-cards">
+          <!-- GOOD EXAMPLE 1: Clinical friend probing -->
+          <div class="carousel-card good active">
+            <div class="card-header">
+              <span class="tag">Clinical friend approach</span>
+              <span class="title">Same question, different response</span>
+            </div>
+            <div class="card-body">
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">How do I know if I have a migraine?</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Before I give you a textbook answer—what's prompting the question? Are you having headaches now that feel different? Or looking back at something and wondering?<br><br>Migraines are actually pretty complex, and the pattern matters more than any single symptom. Tell me what's going on.</div>
+              </div>
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">Yeah I've been getting these really bad headaches maybe twice a month. They're like... pounding? And I get kind of nauseous. My mom gets migraines so I'm wondering if that's what this is.</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">The family history is relevant—migraines do run in families. A few more questions to help think through this:<br><br>When these hit, how long do they last? Hours, a day, longer?<br><br>Do you notice anything before they start—changes in vision, feeling off, weird smells?<br><br>Where's the pain—one side, both, behind your eyes?<br><br>And does anything help—dark room, sleep, ibuprofen?</div>
+              </div>
+            </div>
           </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Before I give you a textbook answer—what's prompting the question? Are you having headaches now that feel different? Or looking back at something and wondering?<br><br>Migraines are actually pretty complex, and the pattern matters more than any single symptom. Tell me what's going on.</div>
-          </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">Yeah I've been getting these really bad headaches maybe twice a month. They're like... pounding? And I get kind of nauseous. My mom gets migraines so I'm wondering if that's what this is.</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">The family history is relevant—migraines do run in families. A few more questions to help think through this:<br><br>When these hit, how long do they last? Hours, a day, longer?<br><br>Do you notice anything before they start—changes in vision, feeling off, weird smells?<br><br>Where's the pain—one side, both, behind your eyes?<br><br>And does anything help—dark room, sleep, ibuprofen?</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- GOOD EXAMPLE 2: With context/memory -->
-      <div class="carousel-card good">
-        <div class="card-header">
-          <span class="tag">With your health context</span>
-          <span class="title">When AI knows your history</span>
-        </div>
-        <div class="card-body">
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content"><em>I see from your health baseline that you have a history of tension headaches, take Lexapro for anxiety, and mentioned you tend to avoid doctors. Your mom has migraines.</em></div>
+          <!-- GOOD EXAMPLE 2: With context/memory -->
+          <div class="carousel-card good">
+            <div class="card-header">
+              <span class="tag">With your health context</span>
+              <span class="title">When AI knows your history</span>
+            </div>
+            <div class="card-body">
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content"><em>I see from your health baseline that you have a history of tension headaches, take Lexapro for anxiety, and mentioned you tend to avoid doctors. Your mom has migraines.</em></div>
+              </div>
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">I've been getting these really bad headaches lately, different from my usual ones.</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Different from your usual tension headaches—that's worth paying attention to. Tell me more about "different." Is it the location, the intensity, or does it come with things your regular headaches don't?<br><br>Given your family history, I'm already thinking about whether these could be migraines emerging. They can show up at any age, and sometimes SSRIs like Lexapro can affect headache patterns (either direction).<br><br>How long have these new ones been happening?</div>
+              </div>
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">Maybe 6 weeks? They're more like throbbing on one side and I feel kind of sick</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Six weeks of new-pattern headaches that are unilateral and throbbing with nausea—that's textbook migraine presentation. Given that this is a change from your baseline and your doctor-avoidant tendency, I want to be direct: this warrants a visit.<br><br>Not because it's scary—new-onset migraines are common and manageable—but because migraines have good treatments you can't get without a prescription. A neurologist or even your PCP can help.<br><br>Would it help to prep what to tell them so you get the most out of a short appointment?</div>
+              </div>
+            </div>
           </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">I've been getting these really bad headaches lately, different from my usual ones.</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Different from your usual tension headaches—that's worth paying attention to. Tell me more about "different." Is it the location, the intensity, or does it come with things your regular headaches don't?<br><br>Given your family history, I'm already thinking about whether these could be migraines emerging. They can show up at any age, and sometimes SSRIs like Lexapro can affect headache patterns (either direction).<br><br>How long have these new ones been happening?</div>
-          </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">Maybe 6 weeks? They're more like throbbing on one side and I feel kind of sick</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Six weeks of new-pattern headaches that are unilateral and throbbing with nausea—that's textbook migraine presentation. Given that this is a change from your baseline and your doctor-avoidant tendency, I want to be direct: this warrants a visit.<br><br>Not because it's scary—new-onset migraines are common and manageable—but because migraines have good treatments you can't get without a prescription. A neurologist or even your PCP can help.<br><br>Would it help to prep what to tell them so you get the most out of a short appointment?</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- GOOD EXAMPLE 3: Pre-visit prep -->
-      <div class="carousel-card good">
-        <div class="card-header">
-          <span class="tag">Pre-visit prep</span>
-          <span class="title">Getting ready for an appointment</span>
-        </div>
-        <div class="card-body">
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">I have a dermatology appointment Thursday about this mole. It's changed over the last few months—darker, maybe bigger. I'm kind of freaked out.</div>
+          <!-- GOOD EXAMPLE 3: Pre-visit prep -->
+          <div class="carousel-card good">
+            <div class="card-header">
+              <span class="tag">Pre-visit prep</span>
+              <span class="title">Getting ready for an appointment</span>
+            </div>
+            <div class="card-body">
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">I have a dermatology appointment Thursday about this mole. It's changed over the last few months—darker, maybe bigger. I'm kind of freaked out.</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Good that you made the appointment—changed moles should be looked at, and you're doing the right thing.<br><br>A few things to have ready:<br><br><strong>What they'll want to know:</strong><br>• When did you first notice the change?<br>• Has it changed color, size, shape, or texture?<br>• Any itching, bleeding, or crusting?<br>• Your sun exposure history and any bad burns<br>• Family history of melanoma or skin cancer<br><br><strong>Worth asking them:</strong><br>• What do you see? (They might not volunteer this)<br>• Do you recommend a biopsy or just monitoring?<br>• If monitoring, what changes should bring me back sooner?<br><br>It's okay to be freaked out. Most changed moles turn out to be nothing concerning. But even if this one needs attention, you're catching it early, which is exactly what you want.</div>
+              </div>
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">What's the biopsy like if they do one?</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Usually quick and not a big deal—they numb the area with local anesthetic (a small pinch), then either shave off the top layer or punch out a tiny core. Takes a few minutes. The waiting for results (typically a week) is honestly the hard part.<br><br>You'll have a small wound that heals over 1-2 weeks. Some leave a small scar, depending on location and method. Worth asking them which approach they'd use for your specific spot.</div>
+              </div>
+            </div>
           </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Good that you made the appointment—changed moles should be looked at, and you're doing the right thing.<br><br>A few things to have ready:<br><br><strong>What they'll want to know:</strong><br>• When did you first notice the change?<br>• Has it changed color, size, shape, or texture?<br>• Any itching, bleeding, or crusting?<br>• Your sun exposure history and any bad burns<br>• Family history of melanoma or skin cancer<br><br><strong>Worth asking them:</strong><br>• What do you see? (They might not volunteer this)<br>• Do you recommend a biopsy or just monitoring?<br>• If monitoring, what changes should bring me back sooner?<br><br>It's okay to be freaked out. Most changed moles turn out to be nothing concerning. But even if this one needs attention, you're catching it early, which is exactly what you want.</div>
-          </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">What's the biopsy like if they do one?</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Usually quick and not a big deal—they numb the area with local anesthetic (a small pinch), then either shave off the top layer or punch out a tiny core. Takes a few minutes. The waiting for results (typically a week) is honestly the hard part.<br><br>You'll have a small wound that heals over 1-2 weeks. Some leave a small scar, depending on location and method. Worth asking them which approach they'd use for your specific spot.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- GOOD EXAMPLE 4: Ongoing mystery -->
-      <div class="carousel-card good">
-        <div class="card-header">
-          <span class="tag">Ongoing mystery</span>
-          <span class="title">Systematic thinking together</span>
-        </div>
-        <div class="card-body">
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">I've had this fatigue for about 2 months. Not tired-sleepy, more like no energy even after rest. Blood work came back "normal" according to my doctor but I still feel awful.</div>
+          <!-- GOOD EXAMPLE 4: Ongoing mystery -->
+          <div class="carousel-card good">
+            <div class="card-header">
+              <span class="tag">Ongoing mystery</span>
+              <span class="title">Systematic thinking together</span>
+            </div>
+            <div class="card-body">
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">I've had this fatigue for about 2 months. Not tired-sleepy, more like no energy even after rest. Blood work came back "normal" according to my doctor but I still feel awful.</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">"Normal" blood work with persistent fatigue is frustrating—you know something's off but the obvious tests didn't catch it. Let's think through this systematically.<br><br>First: do you know what was actually tested? "Standard blood work" varies a lot. Usually it's CBC, metabolic panel, maybe thyroid. But there are common fatigue causes those don't catch.</div>
+              </div>
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">I think it was CBC and metabolic panel. Maybe thyroid? I can check the patient portal.</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Yeah, pull that up if you can—I can help you read it. "Normal" sometimes means "within range" but not optimal for you.<br><br>Things worth checking that basic panels miss:<br>• Vitamin D (very common deficiency, classic fatigue cause)<br>• B12 (especially if you're vegetarian or on certain meds)<br>• Ferritin (iron stores—can be low even with normal hemoglobin)<br>• More detailed thyroid (TSH alone can miss subclinical issues)<br><br>While you look: any other symptoms? Brain fog, muscle aches, mood changes, sleep quality, appetite, weight changes? Sometimes what seems like one thing is actually a pattern.</div>
+              </div>
+            </div>
           </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">"Normal" blood work with persistent fatigue is frustrating—you know something's off but the obvious tests didn't catch it. Let's think through this systematically.<br><br>First: do you know what was actually tested? "Standard blood work" varies a lot. Usually it's CBC, metabolic panel, maybe thyroid. But there are common fatigue causes those don't catch.</div>
-          </div>
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">I think it was CBC and metabolic panel. Maybe thyroid? I can check the patient portal.</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Yeah, pull that up if you can—I can help you read it. "Normal" sometimes means "within range" but not optimal for you.<br><br>Things worth checking that basic panels miss:<br>• Vitamin D (very common deficiency, classic fatigue cause)<br>• B12 (especially if you're vegetarian or on certain meds)<br>• Ferritin (iron stores—can be low even with normal hemoglobin)<br>• More detailed thyroid (TSH alone can miss subclinical issues)<br><br>While you look: any other symptoms? Brain fog, muscle aches, mood changes, sleep quality, appetite, weight changes? Sometimes what seems like one thing is actually a pattern.</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- GOOD EXAMPLE 5: Understanding results -->
-      <div class="carousel-card good">
-        <div class="card-header">
-          <span class="tag">Understanding results</span>
-          <span class="title">Making sense of test data</span>
+          <!-- GOOD EXAMPLE 5: Understanding results -->
+          <div class="carousel-card good">
+            <div class="card-header">
+              <span class="tag">Understanding results</span>
+              <span class="title">Making sense of test data</span>
+            </div>
+            <div class="card-body">
+              <div class="msg msg-user">
+                <div class="msg-label">You</div>
+                <div class="msg-content">Got my blood work back. Doctor said it's fine but some things are flagged. My vitamin D is 18 ng/mL (flagged low), TSH is 4.2 mIU/L (in range but high end), and ferritin is 22 ng/mL (in range). Does any of this explain why I'm so tired?</div>
+              </div>
+              <div class="msg msg-ai">
+                <div class="msg-label">Claude</div>
+                <div class="msg-content">Yes, actually—this looks like a plausible explanation, even though only one is flagged.<br><br><strong>Vitamin D at 18:</strong> This is legitimately low. Under 20 is deficiency, and many people don't feel well until they're 40-60+. This alone can cause significant fatigue, brain fog, and muscle weakness. Easy fix with supplementation.<br><br><strong>Ferritin at 22:</strong> Technically "in range" but that range is wide. Many doctors consider under 30-50 suboptimal, especially for fatigue. If you're menstruating, this could be slowly draining your iron stores.<br><br><strong>TSH at 4.2:</strong> Normal range goes up to ~4.5, but some people feel hypothyroid above 2.5-3. Worth watching, especially with the fatigue picture.<br><br>All three together? You've probably found your answer—or at least a big piece of it.<br><br>Worth asking your doctor about D supplementation (usually 2000-5000 IU daily to start) and whether they'd consider a trial of iron given your ferritin.</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="msg msg-user">
-            <div class="msg-label">You</div>
-            <div class="msg-content">Got my blood work back. Doctor said it's fine but some things are flagged. My vitamin D is 18 ng/mL (flagged low), TSH is 4.2 mIU/L (in range but high end), and ferritin is 22 ng/mL (in range). Does any of this explain why I'm so tired?</div>
-          </div>
-          <div class="msg msg-ai">
-            <div class="msg-label">Claude</div>
-            <div class="msg-content">Yes, actually—this looks like a plausible explanation, even though only one is flagged.<br><br><strong>Vitamin D at 18:</strong> This is legitimately low. Under 20 is deficiency, and many people don't feel well until they're 40-60+. This alone can cause significant fatigue, brain fog, and muscle weakness. Easy fix with supplementation.<br><br><strong>Ferritin at 22:</strong> Technically "in range" but that range is wide. Many doctors consider under 30-50 suboptimal, especially for fatigue. If you're menstruating, this could be slowly draining your iron stores.<br><br><strong>TSH at 4.2:</strong> Normal range goes up to ~4.5, but some people feel hypothyroid above 2.5-3. Worth watching, especially with the fatigue picture.<br><br>All three together? You've probably found your answer—or at least a big piece of it.<br><br>Worth asking your doctor about D supplementation (usually 2000-5000 IU daily to start) and whether they'd consider a trial of iron given your ferritin.</div>
-          </div>
+
+        <div class="carousel-dots" id="carousel-dots">
+          <button class="carousel-dot active" data-index="0"></button>
+          <button class="carousel-dot" data-index="1"></button>
+          <button class="carousel-dot" data-index="2"></button>
+          <button class="carousel-dot" data-index="3"></button>
+          <button class="carousel-dot" data-index="4"></button>
         </div>
       </div>
     </div>
@@ -795,7 +912,7 @@
         <div class="sidebar-inner">
           <h4>On this page</h4>
           <ul>
-            <li><a href="#why">Why this works</a></li>
+            <li><a href="#why">Good health advice needs context</a></li>
             <li><a href="#basics">The basics</a></li>
             <li><a href="#context">Build your context</a></li>
             <li><a href="#skill">The skill</a></li>
@@ -808,21 +925,36 @@
 
         <!-- WHY THIS WORKS -->
         <section id="why" class="section">
-          <h2>Why this works</h2>
+          <h2>Good health advice needs context</h2>
           <p>
-            A doctor friend doesn't give you better advice because they know more medicine than the internet. They give you better advice because they know <em>you</em>—your history, your tendencies, how you relate to your health—and they can have a real conversation. They ask questions. They push back. They say "that doesn't sound right" or "you should actually get that checked."
+            Some people have clinical friends they can just text before paying for care. They're not getting "care" so much as advice and guidance—help thinking through what's going on and what to do about it.
           </p>
           <p>
-            Modern AI can do this. Anthropic's own guidelines describe Claude as "<a href="https://gist.github.com/Richard-Weiss/efe157692991535403bd7e7fb20b6695" target="_blank">a brilliant friend who happens to have the knowledge of a doctor, lawyer, financial advisor</a>." A friend who "gives you real information based on your specific situation rather than overly cautious advice driven by fear of liability."
+            AI is actually good at this. But most people use it wrong.
           </p>
           <p>
-            The research backs this up. <a href="https://time.com/7299314/microsoft-ai-better-than-doctors-diagnosis/" target="_blank">Recent studies</a> show AI matching or exceeding physician-level diagnostic accuracy on complex cases. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12161448/" target="_blank">Claude specifically</a> scores at the top of medical benchmarks, with 98%+ accuracy on clinical diagnosis tasks in controlled studies.
+            They present symptoms and expect answers. That's not how good health thinking works. What sets clinicians apart is they know that figuring out health issues requires identifying what <em>isn't</em> present as much as what is. This is why they ask weird questions about your family history, your meds, whether this hurts or that hurts. That process is called differential diagnosis—a structured way of ruling things in and out.
           </p>
           <p>
-            But here's the thing: those studies give the AI complete information. In the real world, most people ask one-shot questions with no context, like talking to a stranger. They get generic answers because they asked generic questions.
+            <strong>Example:</strong> You have a headache with a stiff neck. A clinician will almost instantly ask: "Can you touch your chin to your chest? Does it hurt when you do?" If you can, it rules out meningitis. Diagnosis is as much about what something <em>isn't</em> as what it is.
           </p>
           <p>
-            <strong>The trick is to actually talk to it.</strong> Give it context. Let it ask you questions. Have a back-and-forth. The AI already has the medical knowledge—this guide teaches you how to give it the context it needs to use that knowledge well.
+            This is why WebMD always ends up at cancer—it can't help you rule out.
+          </p>
+
+          <div class="note">
+            <p><strong>The trick:</strong> Give the AI context and let it know you're investigating together. Don't just present symptoms—let it ask you questions. Have a back-and-forth.</p>
+          </div>
+
+          <h3>What a clinical friend knows about you</h3>
+          <p>
+            When you text a clinical friend, they already know things: your age, your general health, how anxious you tend to be, how you approach problems, what you care about. They know if you text them every other day or once every two years.
+          </p>
+          <p>
+            All of that nuance matters. Health care is weird—often all a clinician has to go on is what you tell them. So they're not just interpreting your symptoms, they're interpreting <em>you</em>: whether what you're saying is likely accurate, how you tend to describe things, what "a lot of pain" means coming from you specifically.
+          </p>
+          <p>
+            AI doesn't have this context unless you give it. This guide shows you how.
           </p>
 
           <div class="note">
@@ -870,6 +1002,19 @@
             <li><strong>"I'm a bit of a hypochondriac"</strong> — AI should help calibrate worry appropriately</li>
             <li><strong>"I have health anxiety"</strong> — AI should be thoughtful about how it presents possibilities</li>
           </ul>
+
+          <div class="voice-examples">
+            <p class="voice-examples-label">Same symptom, different responses:</p>
+            <div class="voice-example">
+              <div class="voice-tag avoider">For someone who avoids doctors</div>
+              <p>"I know you tend to put off appointments, so I want to be direct: two weeks of this with no improvement is past the point of wait-and-see. This warrants a visit. Want help figuring out what to tell them?"</p>
+            </div>
+            <div class="voice-example">
+              <div class="voice-tag worrier">For someone with health anxiety</div>
+              <p>"Before we go down the list of possibilities—most of which are benign—let's focus on what's actually most likely given what you've described. The scary stuff is rare. Let's think through this calmly."</p>
+            </div>
+          </div>
+
           <p>
             A suggestion to "see a doctor" means very different things to someone who goes at every twinge vs. someone who hasn't been in years.
           </p>
@@ -922,8 +1067,18 @@
         <section id="skill" class="section">
           <h2>The skill (Claude only)</h2>
           <p>
-            If you use Claude, you can install a custom skill that nudges it to automatically do the things described above. It doesn't add capabilities—it adds reminders and structure.
+            Everything above works without any special tools—just talk to Claude (or any AI) the way this guide describes. The skill below is optional extra support.
           </p>
+          <p>
+            It's a small file that nudges Claude to automatically do the things described above. It doesn't add capabilities—it adds reminders and structure.
+          </p>
+
+          <h3>Who it's for</h3>
+          <ul>
+            <li><strong>New to AI health conversations</strong> — gives you training wheels until the approach feels natural</li>
+            <li><strong>Want more structure</strong> — automatically anchors on your need type (acute, chronic, pre-visit, etc.)</li>
+            <li><strong>Don't trust your own prompting</strong> — ensures Claude asks the right follow-ups even if you forget to prompt it</li>
+          </ul>
 
           <h3>What it does</h3>
           <ul>
@@ -1018,10 +1173,10 @@ Make every future conversation better.</code></pre>
 
           <h3>The goal</h3>
           <p>
-            AI helps you work <em>with</em> doctors better, not avoid them. It helps you show up prepared, ask better questions, and understand what you're told.
+            Everyone deserves someone who'll actually think through their health with them.
           </p>
           <p>
-            That's the whole thing. Close the gap.
+            This is early. If you try it—whether it helps or falls flat—<a href="mailto:kyle@kmunk.com">I'd love to hear</a>.
           </p>
         </section>
 
@@ -1036,6 +1191,62 @@ Make every future conversation better.</code></pre>
       </p>
     </div>
   </footer>
+
+  <script>
+    (function() {
+      const container = document.getElementById('good-cards');
+      const dots = document.querySelectorAll('.carousel-dot');
+      const cards = container.querySelectorAll('.carousel-card.good');
+      let currentIndex = 0;
+      let autoplayInterval;
+      const AUTOPLAY_DELAY = 5000;
+
+      function showCard(index) {
+        cards.forEach((card, i) => {
+          card.classList.remove('active');
+          if (i === index) {
+            card.classList.add('active');
+          }
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.remove('active');
+          if (i === index) {
+            dot.classList.add('active');
+          }
+        });
+        currentIndex = index;
+      }
+
+      function nextCard() {
+        const next = (currentIndex + 1) % cards.length;
+        showCard(next);
+      }
+
+      function startAutoplay() {
+        autoplayInterval = setInterval(nextCard, AUTOPLAY_DELAY);
+      }
+
+      function stopAutoplay() {
+        clearInterval(autoplayInterval);
+      }
+
+      // Dot click handlers
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          stopAutoplay();
+          showCard(i);
+          startAutoplay();
+        });
+      });
+
+      // Pause autoplay on hover
+      container.addEventListener('mouseenter', stopAutoplay);
+      container.addEventListener('mouseleave', startAutoplay);
+
+      // Start autoplay
+      startAutoplay();
+    })();
+  </script>
 
 </body>
 </html>
