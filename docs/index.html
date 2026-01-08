@@ -3,83 +3,78 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Skills — Use AI like a clinical friend</title>
-  <meta name="description" content="Learn to get real health guidance from AI. The unofficial guide to using Claude, ChatGPT, and Gemini for health.">
+  <title>Your AI Clinical Friend</title>
+  <meta name="description" content="AI gives everyone a clinical friend. Learn how to use Claude for better health thinking.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
 
+  <!-- Littlefoot for footnotes -->
+  <link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css" />
+
   <style>
     :root {
-      /* Dark mode colors - softer than pure black */
-      --bg-primary: #161618;
-      --bg-secondary: #1e1e21;
-      --bg-tertiary: #252528;
-      --bg-code: #1c1c1f;
-      --bg-elevated: #2a2a2e;
+      /* Dark mode - muted sage */
+      --bg-primary: #1A1E1A;
+      --bg-secondary: #222722;
+      --bg-tertiary: #2A302A;
+      --bg-code: #1E231E;
+      --bg-elevated: #323832;
 
-      /* Text - not pure white, easier on eyes */
-      --text-primary: #f0f0f2;
-      --text-secondary: #a8a8b3;
-      --text-body: #d8d8dd;
-      --text-muted: #6b6b78;
+      /* Text - warm off-whites */
+      --text-primary: #F2EDE6;
+      --text-secondary: #B8B0A3;
+      --text-body: #D6CFC4;
+      --text-muted: #7A736A;
 
-      /* Accents - primary teal, secondary warm */
-      --accent: #4fd1c5;
-      --accent-hover: #38b2ac;
-      --accent-subtle: rgba(79, 209, 197, 0.12);
-      --accent-secondary: #f6ad55;
-      --accent-secondary-subtle: rgba(246, 173, 85, 0.12);
+      /* Accents - sage green primary, terracotta secondary */
+      --accent: #9AAF8A;
+      --accent-hover: #B3C4A5;
+      --accent-subtle: rgba(154, 175, 138, 0.15);
+      --accent-secondary: #C9855F;
+      --accent-secondary-subtle: rgba(201, 133, 95, 0.15);
 
       /* Semantic colors */
-      --border: #2d2d32;
-      --border-light: #3d3d44;
-      --warning: #f6ad55;
-      --warning-bg: rgba(246, 173, 85, 0.1);
-      --bad: #fc8181;
-      --bad-bg: rgba(252, 129, 129, 0.1);
-      --good: #68d391;
-      --good-bg: rgba(104, 211, 145, 0.08);
+      --border: #363D36;
+      --border-light: #454D45;
+      --warning: #D4A574;
+      --warning-bg: rgba(212, 165, 116, 0.12);
 
       /* Typography */
       --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
       --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
       --font-size-base: 18px;
-      --line-height-body: 1.65;
+      --line-height-body: 1.7;
       --line-height-tight: 1.3;
-      --max-width-prose: 720px;
+      --max-width-prose: 680px;
     }
 
-    /* Light mode */
+    /* Light mode - warm sepia */
     @media (prefers-color-scheme: light) {
       :root {
-        --bg-primary: #fafafa;
-        --bg-secondary: #f5f5f5;
-        --bg-tertiary: #eeeeee;
-        --bg-code: #f0f0f0;
-        --bg-elevated: #ffffff;
+        --bg-primary: #F7F3EB;
+        --bg-secondary: #EFE9DF;
+        --bg-tertiary: #E7E1D6;
+        --bg-code: #EBE5DA;
+        --bg-elevated: #FFFCF6;
 
-        --text-primary: #1a1a1a;
-        --text-secondary: #4a4a4a;
-        --text-body: #2d2d2d;
-        --text-muted: #777777;
+        --text-primary: #3D3530;
+        --text-secondary: #5C534A;
+        --text-body: #4A433C;
+        --text-muted: #8A8077;
 
-        --accent: #0d9488;
-        --accent-hover: #0f766e;
-        --accent-subtle: rgba(13, 148, 136, 0.1);
-        --accent-secondary: #d97706;
-        --accent-secondary-subtle: rgba(217, 119, 6, 0.1);
+        --accent: #6B7F5E;
+        --accent-hover: #5A6B4F;
+        --accent-subtle: rgba(107, 127, 94, 0.12);
+        --accent-secondary: #B5694A;
+        --accent-secondary-subtle: rgba(181, 105, 74, 0.1);
 
-        --border: #e0e0e0;
-        --border-light: #d0d0d0;
-        --warning: #d97706;
-        --warning-bg: rgba(217, 119, 6, 0.08);
-        --bad: #dc2626;
-        --bad-bg: rgba(220, 38, 38, 0.08);
-        --good: #059669;
-        --good-bg: rgba(5, 150, 105, 0.08);
+        --border: #DDD7CC;
+        --border-light: #CCC6BB;
+        --warning: #B5694A;
+        --warning-bg: rgba(181, 105, 74, 0.1);
       }
     }
 
@@ -107,6 +102,7 @@
     h1, h2, h3, h4, h5, h6 {
       font-family: var(--font-heading);
       line-height: var(--line-height-tight);
+      color: var(--text-primary);
     }
 
     code, .mono, pre {
@@ -126,82 +122,10 @@
     }
 
     /* Layout */
-    .page-wrapper {
-      display: flex;
-      max-width: 1200px;
+    .container {
+      max-width: var(--max-width-prose);
       margin: 0 auto;
       padding: 0 24px;
-    }
-
-    .sidebar {
-      width: 200px;
-      flex-shrink: 0;
-      padding-right: 32px;
-      display: none;
-    }
-
-    @media (min-width: 900px) {
-      .sidebar {
-        display: block;
-      }
-    }
-
-    .sidebar-inner {
-      position: sticky;
-      top: 32px;
-      padding-top: 48px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .sidebar-inner.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .sidebar h4 {
-      font-size: 11px;
-      font-family: var(--font-heading);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .sidebar li {
-      margin-bottom: 12px;
-    }
-
-    .sidebar a {
-      font-size: 13px;
-      font-family: var(--font-heading);
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-
-    .sidebar a:hover {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .sidebar a.active {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .main-content {
-      flex: 1;
-      min-width: 0;
-      max-width: var(--max-width-prose);
     }
 
     /* Header */
@@ -219,6 +143,7 @@
     }
 
     .logo {
+      font-family: var(--font-heading);
       font-weight: 700;
       font-size: 18px;
       color: var(--text-primary);
@@ -248,16 +173,11 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .hero .main-content {
-      max-width: 720px;
-    }
-
     .hero h1 {
       font-size: 42px;
       font-weight: 800;
-      color: var(--text-primary);
       line-height: 1.15;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       letter-spacing: -0.02em;
     }
 
@@ -265,256 +185,47 @@
       color: var(--accent);
     }
 
-    .hero-tagline {
-      font-size: 24px;
-      font-family: var(--font-body);
-      color: var(--text-primary);
-      font-weight: 500;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-
-    .hero-subtitle {
-      font-size: var(--font-size-base);
+    .hero-intro {
+      font-size: 20px;
       color: var(--text-body);
-      font-weight: 500;
-      margin-bottom: 32px;
-      line-height: var(--line-height-body);
-    }
-
-    .hero-links {
-      font-size: 15px;
-      color: var(--text-muted);
-    }
-
-    .hero-links a {
-      font-weight: 500;
-    }
-
-    /* Carousel */
-    .carousel-section {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .carousel-section h2 {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
-    }
-
-    .comparison {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    @media (max-width: 800px) {
-      .comparison {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .comparison-side {
-      min-width: 0;
-    }
-
-    .comparison-side.good-side {
-      position: relative;
-    }
-
-    .good-cards-container {
-      position: relative;
-      min-height: 420px;
-    }
-
-    .carousel-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .carousel-card.bad {
-      border-color: rgba(252, 129, 129, 0.3);
-      background: linear-gradient(to bottom, rgba(252, 129, 129, 0.03), var(--bg-secondary) 100px);
-    }
-
-    .carousel-card.good {
-      border-color: rgba(79, 209, 197, 0.3);
-      background: linear-gradient(to bottom, rgba(79, 209, 197, 0.03), var(--bg-secondary) 100px);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      opacity: 0;
-      transition: opacity 0.4s ease-in-out;
-      pointer-events: none;
-    }
-
-    .carousel-card.good.active {
-      opacity: 1;
-      pointer-events: auto;
-      position: relative;
-    }
-
-    .carousel-dots {
-      display: flex;
-      justify-content: flex-start;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .carousel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border-light);
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s;
-      padding: 0;
-    }
-
-    .carousel-dot:hover {
-      background: var(--text-muted);
-    }
-
-    .carousel-dot.active {
-      background: var(--accent);
-      width: 24px;
-      border-radius: 4px;
-    }
-
-    .card-header {
-      padding: 14px 18px;
-      background: var(--bg-tertiary);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .card-header .tag {
-      font-size: 10px;
-      font-family: var(--font-heading);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
-
-    .bad .tag {
-      background: var(--bad-bg);
-      color: var(--bad);
-    }
-
-    .good .tag {
-      background: var(--accent-subtle);
-      color: var(--accent);
-    }
-
-    .card-header .title {
-      font-size: 13px;
-      font-family: var(--font-heading);
-      color: var(--text-secondary);
-    }
-
-    .card-body {
-      padding: 18px;
-      max-height: 400px;
-      overflow-y: auto;
-      font-family: var(--font-heading);
-    }
-
-    .msg {
       margin-bottom: 16px;
     }
 
-    .msg:last-child {
-      margin-bottom: 0;
-    }
-
-    .msg-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
-
-    .msg-user .msg-label {
-      color: var(--text-muted);
-    }
-
-    .msg-ai .msg-label {
-      color: var(--accent);
-    }
-
-    .msg-content {
-      font-size: 14px;
-      line-height: 1.55;
+    .hero-intro a {
       color: var(--text-body);
-    }
-
-    .msg-ai .msg-content {
-      color: var(--text-secondary);
-    }
-
-    .msg-content em {
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    .msg-content strong {
-      color: var(--text-primary);
       font-weight: 600;
     }
 
     /* Main content */
     main {
-      padding: 48px 0;
+      padding: 48px 0 72px;
     }
 
     /* Sections */
-    .section {
-      margin-bottom: 56px;
+    section {
+      margin-bottom: 48px;
     }
 
-    .section:last-child {
+    section:last-child {
       margin-bottom: 0;
     }
 
     h2 {
-      font-family: var(--font-heading);
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--text-primary);
-      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      margin-top: 48px;
+    }
+
+    section:first-child h2 {
+      margin-top: 0;
     }
 
     h3 {
-      font-family: var(--font-heading);
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-top: 36px;
-      margin-bottom: 14px;
-    }
-
-    h4 {
-      font-size: 15px;
+      font-size: 20px;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-top: 24px;
-      margin-bottom: 8px;
+      margin-top: 32px;
+      margin-bottom: 12px;
     }
 
     p {
@@ -525,90 +236,13 @@
       margin-bottom: 0;
     }
 
-    /* Note/callout */
-    .note {
-      background: var(--accent-subtle);
-      border-left: 3px solid var(--accent);
-      padding: 14px 18px;
-      margin: 20px 0;
-      border-radius: 0 6px 6px 0;
-    }
-
-    .note p {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .note strong {
+    strong {
       color: var(--text-primary);
-    }
-
-    /* Voice examples */
-    .voice-examples {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin: 24px 0;
-    }
-
-    .voice-examples-label {
-      font-size: 14px;
       font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 14px !important;
     }
 
-    .voice-example {
-      background: var(--bg-code);
-      border-radius: 6px;
-      padding: 16px 18px;
-      margin-bottom: 14px;
-    }
-
-    .voice-example:last-child {
-      margin-bottom: 0;
-    }
-
-    .voice-tag {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .voice-tag.avoider {
-      color: var(--warning);
-    }
-
-    .voice-tag.worrier {
-      color: var(--accent);
-    }
-
-    .voice-example p {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-body);
+    em {
       font-style: italic;
-    }
-
-    .warning {
-      background: var(--warning-bg);
-      border-left: 3px solid var(--warning);
-      padding: 14px 18px;
-      margin: 20px 0;
-      border-radius: 0 6px 6px 0;
-    }
-
-    .warning p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .warning strong {
-      color: var(--warning);
     }
 
     /* Lists */
@@ -625,7 +259,56 @@
       margin-bottom: 0;
     }
 
-    /* Code */
+    /* Code blocks */
+    .code-block {
+      position: relative;
+      margin: 20px 0;
+    }
+
+    pre {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    pre code {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      background: none;
+      padding: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent);
+    }
+
     code {
       background: var(--bg-code);
       padding: 2px 6px;
@@ -634,94 +317,34 @@
       color: var(--accent);
     }
 
-    pre {
-      background: var(--bg-code);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 16px 20px;
-      overflow-x: auto;
-      margin: 16px 0;
-    }
-
-    pre code {
-      background: none;
-      padding: 0;
-      font-size: 13px;
-      line-height: 1.6;
-      color: var(--text-secondary);
-    }
-
-    /* Inline example */
-    .example {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 14px 16px;
-      margin: 16px 0;
-    }
-
-    .example-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .example-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      font-style: italic;
-    }
-
-    /* Steps */
-    .steps {
-      counter-reset: step;
-      margin: 20px 0;
-    }
-
-    .step {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .step:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    .step-num {
-      counter-increment: step;
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
+    /* Callout */
+    .callout {
       background: var(--accent-subtle);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
     }
 
-    .step-num::before {
-      content: counter(step);
-    }
-
-    .step-content h4 {
-      margin-top: 0;
-      margin-bottom: 6px;
-    }
-
-    .step-content p {
-      font-size: 14px;
+    .callout p {
       margin: 0;
+    }
+
+    /* Warning */
+    .warning {
+      background: var(--warning-bg);
+      border-left: 3px solid var(--warning);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .warning p {
+      margin: 0;
+    }
+
+    .warning strong {
+      color: var(--warning);
     }
 
     /* Download box */
@@ -729,21 +352,29 @@
       background: var(--bg-secondary);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 20px;
-      margin: 20px 0;
+      padding: 24px;
+      margin: 24px 0;
     }
 
     .download-box h4 {
-      margin-top: 0;
+      margin: 0 0 8px 0;
+      font-size: 16px;
+    }
+
+    .download-box p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
+      padding: 12px 20px;
       border-radius: 6px;
-      font-size: 14px;
+      font-family: var(--font-heading);
+      font-size: 15px;
       font-weight: 500;
       text-decoration: none;
       transition: all 0.15s;
@@ -752,19 +383,16 @@
     }
 
     .btn:hover {
-      background: var(--accent-dim);
+      background: var(--accent-hover);
       text-decoration: none;
+      color: var(--bg-primary);
     }
 
-    /* Research citations */
-    .cite {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 12px;
-    }
-
-    .cite a {
-      color: var(--text-secondary);
+    /* Separator */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
     }
 
     /* Footer */
@@ -774,7 +402,7 @@
     }
 
     footer .inner {
-      max-width: 1200px;
+      max-width: var(--max-width-prose);
       margin: 0 auto;
     }
 
@@ -784,30 +412,51 @@
       margin: 0;
     }
 
-    /* What went wrong box - make more prominent */
-    .what-went-wrong {
-      padding: 14px 16px;
-      background: var(--bad-bg);
-      border-radius: 8px;
-      margin-top: 20px;
-      border-left: 3px solid var(--bad);
-    }
-
-    .what-went-wrong-label {
-      font-size: 13px;
-      font-family: var(--font-heading);
-      color: var(--bad);
-      font-weight: 600;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .what-went-wrong-text {
-      font-size: 14px;
+    footer a {
       color: var(--text-secondary);
-      line-height: 1.5;
+    }
+
+    .footnote-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Littlefoot overrides */
+    .littlefoot {
+      --lf-font-family: var(--font-body);
+    }
+
+    .littlefoot__button {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      font-family: var(--font-heading);
+    }
+
+    .littlefoot__popover {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+    }
+
+    .littlefoot__content {
+      color: var(--text-body);
+      font-size: 15px;
+    }
+
+    /* Images */
+    .screenshot {
+      margin: 24px 0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      max-width: 100%;
+      height: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .screenshot-small {
+      max-width: 400px;
     }
 
     /* Responsive */
@@ -820,17 +469,20 @@
         font-size: 32px;
       }
 
-      .hero-tagline {
-        font-size: 20px;
+      .hero-intro {
+        font-size: 18px;
       }
 
-      .step {
-        flex-direction: column;
-        gap: 10px;
+      h2 {
+        font-size: 24px;
       }
 
       body {
         font-size: 17px;
+      }
+
+      pre {
+        padding: 16px;
       }
     }
   </style>
@@ -845,584 +497,212 @@
   </header>
 
   <section class="hero">
-    <div class="page-wrapper">
-      <div class="sidebar"></div>
-      <div class="main-content">
-        <h1>Use AI like a <span>clinical friend</span></h1>
-        <p class="hero-tagline">You can get good health advice from AI. This website teaches you how.</p>
-        <p class="hero-subtitle">
-          If you've ever had a health thing that bugged you—but wasn't enough to go to the doctor, or you're putting off, or embarrassed about, or can't afford a visit—and you're going to ask AI anyway, this site will help you do it better.
-        </p>
-        <p class="hero-links">
-          <a href="#basics">Read the guide</a> · <a href="#skill">Get the Claude skill</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="carousel-section">
-    <div class="page-wrapper">
-      <div class="sidebar"></div>
-      <div class="main-content">
-        <h2>The difference context makes</h2>
-      </div>
-    </div>
-
-    <div class="comparison">
-      <!-- BAD EXAMPLE - Static -->
-      <div class="comparison-side bad-side">
-        <div class="carousel-card bad">
-          <div class="card-header">
-            <span class="tag">How most people use AI</span>
-          </div>
-          <div class="card-body">
-            <div class="msg msg-user">
-              <div class="msg-label">You</div>
-              <div class="msg-content">How do I know if I have a migraine?</div>
-            </div>
-            <div class="msg msg-ai">
-              <div class="msg-label">AI</div>
-              <div class="msg-content">Migraines typically involve: moderate to severe throbbing pain, usually on one side of the head; sensitivity to light and sound; nausea or vomiting; visual disturbances called "aura" (flashing lights, blind spots); pain lasting 4-72 hours...<br><br>If you're experiencing these symptoms, you may want to consult a healthcare provider for proper diagnosis.</div>
-            </div>
-            <div class="msg msg-user">
-              <div class="msg-label">You</div>
-              <div class="msg-content">Ok thanks</div>
-            </div>
-            <div class="what-went-wrong">
-              <div class="what-went-wrong-label">⚠ What went wrong</div>
-              <div class="what-went-wrong-text">Generic question → generic answer. No follow-up. No context. You leave with a Wikipedia summary instead of actual thinking about your situation.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- GOOD EXAMPLES - Cycling -->
-      <div class="comparison-side good-side">
-        <div class="good-cards-container" id="good-cards">
-          <!-- GOOD EXAMPLE 1: Clinical friend probing -->
-          <div class="carousel-card good active">
-            <div class="card-header">
-              <span class="tag">Clinical friend</span>
-              <span class="title">Same question, different response</span>
-            </div>
-            <div class="card-body">
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">How do I know if I have a migraine?</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Before I give you a textbook answer—what's prompting the question? Are you having headaches now that feel different? Or looking back at something and wondering?<br><br>Migraines are actually pretty complex, and the pattern matters more than any single symptom. Tell me what's going on.</div>
-              </div>
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">Yeah I've been getting these really bad headaches maybe twice a month. They're like... pounding? And I get kind of nauseous. My mom gets migraines so I'm wondering if that's what this is.</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">The family history is relevant—migraines do run in families. A few more questions to help think through this:<br><br>When these hit, how long do they last? Hours, a day, longer?<br><br>Do you notice anything before they start—changes in vision, feeling off, weird smells?<br><br>Where's the pain—one side, both, behind your eyes?<br><br>And does anything help—dark room, sleep, ibuprofen?</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GOOD EXAMPLE 2: With context/memory -->
-          <div class="carousel-card good">
-            <div class="card-header">
-              <span class="tag">With your health context</span>
-              <span class="title">When AI knows your history</span>
-            </div>
-            <div class="card-body">
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content"><em>I see from your health baseline that you have a history of tension headaches, take Lexapro for anxiety, and mentioned you tend to avoid doctors. Your mom has migraines.</em></div>
-              </div>
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">I've been getting these really bad headaches lately, different from my usual ones.</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Different from your usual tension headaches—that's worth paying attention to. Tell me more about "different." Is it the location, the intensity, or does it come with things your regular headaches don't?<br><br>Given your family history, I'm already thinking about whether these could be migraines emerging. They can show up at any age, and sometimes SSRIs like Lexapro can affect headache patterns (either direction).<br><br>How long have these new ones been happening?</div>
-              </div>
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">Maybe 6 weeks? They're more like throbbing on one side and I feel kind of sick</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Six weeks of new-pattern headaches that are unilateral and throbbing with nausea—that's textbook migraine presentation. Given that this is a change from your baseline and your doctor-avoidant tendency, I want to be direct: this warrants a visit.<br><br>Not because it's scary—new-onset migraines are common and manageable—but because migraines have good treatments you can't get without a prescription. A neurologist or even your PCP can help.<br><br>Would it help to prep what to tell them so you get the most out of a short appointment?</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GOOD EXAMPLE 3: Pre-visit prep -->
-          <div class="carousel-card good">
-            <div class="card-header">
-              <span class="tag">Pre-visit prep</span>
-              <span class="title">Getting ready for an appointment</span>
-            </div>
-            <div class="card-body">
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">I have a dermatology appointment Thursday about this mole. It's changed over the last few months—darker, maybe bigger. I'm kind of freaked out.</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Good that you made the appointment—changed moles should be looked at, and you're doing the right thing.<br><br>A few things to have ready:<br><br><strong>What they'll want to know:</strong><br>• When did you first notice the change?<br>• Has it changed color, size, shape, or texture?<br>• Any itching, bleeding, or crusting?<br>• Your sun exposure history and any bad burns<br>• Family history of melanoma or skin cancer<br><br><strong>Worth asking them:</strong><br>• What do you see? (They might not volunteer this)<br>• Do you recommend a biopsy or just monitoring?<br>• If monitoring, what changes should bring me back sooner?<br><br>It's okay to be freaked out. Most changed moles turn out to be nothing concerning. But even if this one needs attention, you're catching it early, which is exactly what you want.</div>
-              </div>
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">What's the biopsy like if they do one?</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Usually quick and not a big deal—they numb the area with local anesthetic (a small pinch), then either shave off the top layer or punch out a tiny core. Takes a few minutes. The waiting for results (typically a week) is honestly the hard part.<br><br>You'll have a small wound that heals over 1-2 weeks. Some leave a small scar, depending on location and method. Worth asking them which approach they'd use for your specific spot.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GOOD EXAMPLE 4: Ongoing mystery -->
-          <div class="carousel-card good">
-            <div class="card-header">
-              <span class="tag">Ongoing mystery</span>
-              <span class="title">Systematic thinking together</span>
-            </div>
-            <div class="card-body">
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">I've had this fatigue for about 2 months. Not tired-sleepy, more like no energy even after rest. Blood work came back "normal" according to my doctor but I still feel awful.</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">"Normal" blood work with persistent fatigue is frustrating—you know something's off but the obvious tests didn't catch it. Let's think through this systematically.<br><br>First: do you know what was actually tested? "Standard blood work" varies a lot. Usually it's CBC, metabolic panel, maybe thyroid. But there are common fatigue causes those don't catch.</div>
-              </div>
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">I think it was CBC and metabolic panel. Maybe thyroid? I can check the patient portal.</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Yeah, pull that up if you can—I can help you read it. "Normal" sometimes means "within range" but not optimal for you.<br><br>Things worth checking that basic panels miss:<br>• Vitamin D (very common deficiency, classic fatigue cause)<br>• B12 (especially if you're vegetarian or on certain meds)<br>• Ferritin (iron stores—can be low even with normal hemoglobin)<br>• More detailed thyroid (TSH alone can miss subclinical issues)<br><br>While you look: any other symptoms? Brain fog, muscle aches, mood changes, sleep quality, appetite, weight changes? Sometimes what seems like one thing is actually a pattern.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GOOD EXAMPLE 5: Understanding results -->
-          <div class="carousel-card good">
-            <div class="card-header">
-              <span class="tag">Understanding results</span>
-              <span class="title">Making sense of test data</span>
-            </div>
-            <div class="card-body">
-              <div class="msg msg-user">
-                <div class="msg-label">You</div>
-                <div class="msg-content">Got my blood work back. Doctor said it's fine but some things are flagged. My vitamin D is 18 ng/mL (flagged low), TSH is 4.2 mIU/L (in range but high end), and ferritin is 22 ng/mL (in range). Does any of this explain why I'm so tired?</div>
-              </div>
-              <div class="msg msg-ai">
-                <div class="msg-label">Claude</div>
-                <div class="msg-content">Yes, actually—this looks like a plausible explanation, even though only one is flagged.<br><br><strong>Vitamin D at 18:</strong> This is legitimately low. Under 20 is deficiency, and many people don't feel well until they're 40-60+. This alone can cause significant fatigue, brain fog, and muscle weakness. Easy fix with supplementation.<br><br><strong>Ferritin at 22:</strong> Technically "in range" but that range is wide. Many doctors consider under 30-50 suboptimal, especially for fatigue. If you're menstruating, this could be slowly draining your iron stores.<br><br><strong>TSH at 4.2:</strong> Normal range goes up to ~4.5, but some people feel hypothyroid above 2.5-3. Worth watching, especially with the fatigue picture.<br><br>All three together? You've probably found your answer—or at least a big piece of it.<br><br>Worth asking your doctor about D supplementation (usually 2000-5000 IU daily to start) and whether they'd consider a trial of iron given your ferritin.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="carousel-dots" id="carousel-dots">
-          <button class="carousel-dot active" data-index="0"></button>
-          <button class="carousel-dot" data-index="1"></button>
-          <button class="carousel-dot" data-index="2"></button>
-          <button class="carousel-dot" data-index="3"></button>
-          <button class="carousel-dot" data-index="4"></button>
-        </div>
-      </div>
+    <div class="container">
+      <h1>Your AI <span>Clinical Friend</span></h1>
+      <p class="hero-intro">
+        Two hundred and thirty million people ask AI health questions every week, so OpenAI released <a href="https://openai.com/index/introducing-chatgpt-health/" target="_blank">ChatGPT Health</a>. This is great and we need more features like this. I can't wait to see some of these in Claude.
+      </p>
+      <p class="hero-intro">
+        But you don't need ChatGPT Health. You can get better health advice <em>today</em> with the AI of your choice.
+      </p>
     </div>
   </section>
 
   <main>
-    <div class="page-wrapper">
-      <aside class="sidebar">
-        <div class="sidebar-inner">
-          <h4>On this page</h4>
-          <ul>
-            <li><a href="#why">Good health advice needs context</a></li>
-            <li><a href="#basics">The basics</a></li>
-            <li><a href="#context">Build your context</a></li>
-            <li><a href="#skill">The skill</a></li>
-            <li><a href="#limits">Know the limits</a></li>
-          </ul>
+    <div class="container">
+
+      <section>
+        <h2>The Clinical Friend With Infinite Time</h2>
+        <p>
+          Even the best doctor on the planet with 15 minutes a year to get to know a patient is going to struggle to beat an average doctor talking to their patient daily.
+        </p>
+        <p>
+          Similarly, your clinical friend can often offer <em>very</em> good advice with very little information because they know you so well.
+        </p>
+        <p>
+          They can not only help you figure out what might be wrong, they can help you prep for the doctor because they know how you think and what you care about.
+        </p>
+        <p>
+          Claude gives <em>everyone</em> a clinical friend.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref">*</a></sup>
+        </p>
+      </section>
+
+      <section>
+        <h2>Most of healthcare is just a conversation</h2>
+        <p>
+          A lot of healthcare is just talking. Your PCP learns most of what they need to know by just <em>asking you</em>. Your symptoms, family history, how much you exercise—it's all just what you tell them.
+        </p>
+        <p>
+          Even when there are official records, they're often noisy or confusing, so many clinicians just start from nearly scratch.
+        </p>
+        <p>
+          This is why having Claude act as a good clinical friend isn't all that hard. You don't need to pull in every bit of data, just that first conversation.
+        </p>
+        <p>
+          Diagnosis is also a conversation. Most clinicians only have minutes to ask you a few questions to figure out what you think is wrong, what <em>isn't</em> wrong, what is left to test and try.
+        </p>
+        <p>
+          But if you could answer all those questions before you walked in the door, they could ask more, different, and <em>better</em> questions. AI lets you have a lot of the conversation ahead of time.
+        </p>
+      </section>
+
+      <section>
+        <h2>Start your conversation now, then take your time</h2>
+        <p>
+          Claude has as much time and attention for your health as you do.
+        </p>
+        <p>
+          Claude won't get bored hearing about the daily nuances and flourishes of your knee pain. It doesn't get exhausted by your anxiety. It will answer every question, even the same one, over and over.
+        </p>
+        <p>
+          You can talk to it for an hour today, ten minutes tomorrow, every day for a month. You can send it pictures. You can share your visit notes. You can pick up a conversation from six months ago.
+        </p>
+        <p>
+          Even your best clinical friend can't do that!
+        </p>
+      </section>
+
+      <section>
+        <h2>How to get the most out of AI for your health</h2>
+        <img src="images/the health project.png" alt="A Claude health project showing conversations about various health topics" class="screenshot">
+        <p>This isn't complicated. Five steps:</p>
+
+        <h3>1. Create a Health Project</h3>
+        <p>
+          Call it "Health" or whatever you want. Projects give Claude persistent context—files, memory, custom instructions that carry across conversations.
+        </p>
+        <img src="images/projects.png" alt="Creating a new project in Claude" class="screenshot screenshot-small">
+
+        <h3>2. Add Context, Give Instructions</h3>
+        <p>
+          If you have medical records, upload them. If you don't, don't worry about it. Just upload whatever you have. Imperfect is fine. You can blend official and unofficial. It's <em>your</em> health from <em>your</em> perspective.
+        </p>
+        <p>
+          Instructions set the stage. If you don't wanna mess with this, download the skill. But it's not too bad, you can just copy and paste this:
+        </p>
+        <div class="code-block">
+          <button class="copy-btn">Copy</button>
+          <pre><code>Help me manage my health. I've uploaded the information and records I have to this project's files and any conversation I've had with you about my health is in here. Help me assess any clinical issue the way a talented, caring, friend would who also happens to be an s-tier doctor in all the relevant fields. Just as a good friend can't diagnose, but could offer a lot of good advice, ask the right questions, and help make good decisions, so too should you.
+
+Help me understand my symptoms, think through the most likely scenarios, identify red flags, and all that. When it's time for a visit, help me prepare before and, after, help me make sense of what was discussed.</code></pre>
         </div>
-      </aside>
+        <p>
+          This is a starting point. Remember, Claude wants to help, so let it know your weaknesses. Anxious about health? Likely to panic? Tell Claude. Stubborn? Unlikely to report symptoms, even to an AI, until they're <em>really</em> bad? Tell Claude. Overwhelmed by clinical jargon and afraid of getting it wrong? You know what to do.
+        </p>
 
-      <div class="main-content">
+        <h3>3. Do a Health History</h3>
+        <p>
+          Start a conversation and ask Claude to interview you as their one and only patient. Something like:
+        </p>
+        <div class="code-block">
+          <button class="copy-btn">Copy</button>
+          <pre><code>Hi! Lets start our health journey together. Please interview me the way the best concierge doctor on the planet would interview their one and only billionaire client. Medical history, family history, medications, but also: how do you approach health? Do you tend to ignore things or worry about everything? What's your experience with the healthcare system been like? Goals, interests, all of it. You should know me so well that when I share a symptom, you can guess how I'm feeling and who and what in my life was affected and how.</code></pre>
+        </div>
+        <p>
+          This is often more useful than health records!
+        </p>
 
-        <!-- WHY THIS WORKS -->
-        <section id="why" class="section">
-          <h2>Good health advice needs context</h2>
-          <p>
-            Some people have clinical friends they can just text before paying for care. They're not getting "care" so much as advice and guidance—help thinking through what's going on and what to do about it.
-          </p>
-          <p>
-            AI is actually good at this. But most people use it wrong.
-          </p>
-          <p>
-            They present symptoms and expect answers. That's not how good health thinking works. What sets clinicians apart is they know that figuring out health issues requires identifying what <em>isn't</em> present as much as what is. This is why they ask weird questions about your family history, your meds, whether this hurts or that hurts. That process is called differential diagnosis—a structured way of ruling things in and out.
-          </p>
-          <p>
-            <strong>Example:</strong> You have a headache with a stiff neck. A clinician will almost instantly ask: "Can you touch your chin to your chest? Does it hurt when you do?" If you can, it rules out meningitis. Diagnosis is as much about what something <em>isn't</em> as what it is.
-          </p>
-          <p>
-            This is why WebMD always ends up at cancer—it can't help you rule out.
-          </p>
+        <h3>4. New Conversation for Each Issue</h3>
+        <p>
+          Keep things organized. A new thread for each concern.
+        </p>
+        <p>
+          For chronic stuff or recurring issues, use your judgment—maybe one thread per flare-up, maybe one ongoing thread. You'll figure out what works.
+        </p>
+        <p>
+          Use it more than you think you should. Way more. Every little question. Give it too much detail. Share random updates. Anytime you're noticing something about your health—how you feel, if something is better or worse, what you're worried about—the AI should know.
+        </p>
 
-          <div class="note">
-            <p><strong>The trick:</strong> Give the AI context and let it know you're investigating together. Don't just present symptoms—let it ask you questions. Have a back-and-forth.</p>
-          </div>
+        <h3>5. Use Before, During, and After Care</h3>
+        <p>
+          This is where all that detail pays off. <strong>Before</strong> a visit ask the AI to help you prep: clarify your concerns, anticipate questions, prepare what to say. <strong>During</strong>: take notes or just do voice transcription. <strong>After</strong>: drop in the visit summary, update on what you learned, adjust the plan.
+        </p>
 
-          <h3>What a clinical friend knows about you</h3>
-          <p>
-            When you text a clinical friend, they already know things: your age, your general health, how anxious you tend to be, how you approach problems, what you care about. They know if you text them every other day or once every two years.
-          </p>
-          <p>
-            All of that nuance matters. Health care is weird—often all a clinician has to go on is what you tell them. So they're not just interpreting your symptoms, they're interpreting <em>you</em>: whether what you're saying is likely accurate, how you tend to describe things, what "a lot of pain" means coming from you specifically.
-          </p>
-          <p>
-            AI doesn't have this context unless you give it. This guide shows you how.
-          </p>
+        <div class="callout">
+          <p><strong>The meta-rule:</strong> Start earlier, ask more, talk longer, check in more often. AI doesn't get bored, tired, or annoyed. Start threads when issues are minor, trivial, embarrassing. If they resolve, they resolve. If they don't, you've been building context the whole time.</p>
+        </div>
 
-          <div class="note">
-            <p><strong>This isn't diagnosis.</strong> AI helps you think through possibilities, prepare for appointments, and understand what questions to ask. It doesn't replace a doctor who can actually examine you.</p>
-          </div>
-        </section>
+        <h3>Use a skill to make this easier</h3>
+        <p>
+          The world of medicine and healthcare is confusing. Claude and most AI are great clinical friends out of the box. This skill just helps nudge the AI and lets it know about the structure above. If you're starting cold, this will help you get up and running.
+        </p>
 
-        <!-- THE BASICS -->
-        <section id="basics" class="section">
-          <h2>The basics</h2>
-          <p>These practices work with any AI—<a href="https://claude.ai" target="_blank">Claude</a>, <a href="https://chat.openai.com" target="_blank">ChatGPT</a>, or <a href="https://gemini.google.com" target="_blank">Gemini</a>. No special tools required.</p>
+        <div class="download-box">
+          <h4>Download the Skill</h4>
+          <p>Works with Claude Desktop and Claude.ai. Under 2KB.</p>
+          <a href="https://github.com/kmunki/health-skills/raw/master/skills/health-assistant.zip" class="btn">
+            Download health-assistant.zip
+          </a>
+        </div>
+      </section>
 
-          <h3>1. Sign in and stick with one AI</h3>
-          <p>
-            Context is key to good care. Pick an AI and sign in so it can remember you across conversations. You don't need a separate "health app"—those are more likely to be scams or have weaker models. Trust the big labs.
-          </p>
-          <p>
-            We recommend <a href="https://claude.ai" target="_blank">Claude</a> because it's designed to engage substantively with hard questions rather than hedge everything. But ChatGPT and Gemini work too.
-          </p>
+      <hr>
 
-          <h3>2. Use projects to keep context</h3>
-          <p>
-            Most AI apps let you create dedicated spaces that persist across conversations. Use one for health—it keeps your conversations together and lets the AI reference past context.
-          </p>
-          <ul>
-            <li><a href="https://support.anthropic.com/en/articles/9517075-what-are-projects" target="_blank">Claude Projects</a> — best for this use case</li>
-            <li><a href="https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt" target="_blank">ChatGPT Projects</a></li>
-            <li><a href="https://support.google.com/gemini/answer/14575317" target="_blank">Gemini Gems</a></li>
-          </ul>
+      <section>
+        <h2>Is This For Me?</h2>
+        <p>
+          Using Claude, or any AI, for your health requires you to be an active participant. You need to be willing to think, not just be told what to do. If you want someone to hold your hand and make every decision for you, this isn't it.
+        </p>
+        <p>
+          You also need basic judgment. If you can't confidently figure out when to call 911 versus when to book an appointment, this isn't for you. That's not an insult—some people genuinely need more hand-holding, and that's what the traditional healthcare system is for.
+        </p>
+        <p>
+          But if you're the kind of person who's already asking AI health questions, already trying to figure things out on your own—you're doing it anyway. This just helps you do it better.
+        </p>
+      </section>
 
-          <h3>3. Tell the story, don't just ask the question</h3>
-          <p>
-            "My foot hurts" gets you WebMD. "I rolled my ankle hiking three days ago, it swelled up that night, and it still hurts when I put weight on it" gets you actual thinking.
-          </p>
-          <p>
-            Talk to it like you'd talk to a friend who's a doctor. Include: when it started, what happened, how it's changed, what you've tried, what makes it better or worse.
-          </p>
+      <hr>
 
-          <h3>4. Be honest about who you are</h3>
-          <p>
-            Your relationship with healthcare affects what advice is useful. Tell the AI:
-          </p>
-          <ul>
-            <li><strong>"I tend to avoid doctors"</strong> — AI should be more direct about when to actually go</li>
-            <li><strong>"I'm a bit of a hypochondriac"</strong> — AI should help calibrate worry appropriately</li>
-            <li><strong>"I have health anxiety"</strong> — AI should be thoughtful about how it presents possibilities</li>
-          </ul>
+      <section>
+        <h3>Help make this better</h3>
+        <p>
+          If this helps or you think it can be improved—either the skill or this page—let me know: <a href="mailto:kmunkitt@gmail.com">kmunkitt@gmail.com</a>
+        </p>
+      </section>
 
-          <div class="voice-examples">
-            <p class="voice-examples-label">Same symptom, different responses:</p>
-            <div class="voice-example">
-              <div class="voice-tag avoider">For someone who avoids doctors</div>
-              <p>"I know you tend to put off appointments, so I want to be direct: two weeks of this with no improvement is past the point of wait-and-see. This warrants a visit. Want help figuring out what to tell them?"</p>
-            </div>
-            <div class="voice-example">
-              <div class="voice-tag worrier">For someone with health anxiety</div>
-              <p>"Before we go down the list of possibilities—most of which are benign—let's focus on what's actually most likely given what you've described. The scary stuff is rare. Let's think through this calmly."</p>
-            </div>
-          </div>
-
-          <p>
-            A suggestion to "see a doctor" means very different things to someone who goes at every twinge vs. someone who hasn't been in years.
-          </p>
-
-          <h3>5. Let it interview you</h3>
-          <p>
-            Don't just ask and accept the first answer. Good clinical thinking is iterative. If the AI doesn't ask follow-up questions, prompt it: "What else would help you think through this?" or "What questions would a doctor ask?"
-          </p>
-          <p>
-            The back-and-forth is where the value is. One-shot questions get one-shot answers.
-          </p>
-        </section>
-
-        <!-- BUILDING YOUR HEALTH CONTEXT -->
-        <section id="context" class="section">
-          <h2>Build your health context</h2>
-          <p>
-            The single most valuable thing you can do: spend 10-15 minutes giving the AI your health background. Do this once, save it to your project. Every future conversation benefits.
-          </p>
-
-          <h3>What to include</h3>
-          <ul>
-            <li><strong>Basics:</strong> Age, sex, height, weight, where you live</li>
-            <li><strong>Medical history:</strong> Current diagnoses, past surgeries, significant conditions (even resolved), allergies</li>
-            <li><strong>Medications:</strong> Prescriptions with doses, regular OTC meds, supplements</li>
-            <li><strong>Family history:</strong> Parents' and siblings' major conditions, patterns (heart disease, cancer, diabetes)</li>
-            <li><strong>Lifestyle:</strong> Exercise, diet, sleep, alcohol/tobacco/cannabis, stress level</li>
-            <li><strong>Your tendencies:</strong> Avoider or worrier? Natural remedy preference? How you like to receive information?</li>
-          </ul>
-
-          <h3>How to do it</h3>
-          <p>
-            Start a conversation in your health project. Say: "I want to give you my health background so you have context for future conversations. Can you interview me to build a complete picture?"
-          </p>
-          <p>
-            Let it guide you. Answer naturally—don't worry about medical terminology. When done, ask it to summarize what it learned and save that summary to your project's knowledge base or instructions.
-          </p>
-
-          <div class="note">
-            <p><strong>Use your actual records.</strong> Most health systems let you download your medical records as a PDF from patient portals like MyChart. You can upload these directly to your health project for the most accurate context.</p>
-          </div>
-
-          <h3>Privacy</h3>
-          <p>
-            Yes, you're sharing health information with an AI company. You can share as much or as little as you're comfortable with—even basic context helps. For Claude specifically, <a href="https://support.anthropic.com/en/articles/7996866-how-long-do-you-store-personal-data" target="_blank">conversations are not used for training by default</a>.
-          </p>
-        </section>
-
-        <!-- THE SKILL -->
-        <section id="skill" class="section">
-          <h2>The skill (Claude only)</h2>
-          <p>
-            Everything above works without any special tools—just talk to Claude (or any AI) the way this guide describes. The skill below is optional extra support.
-          </p>
-          <p>
-            It's a small file that nudges Claude to automatically do the things described above. It doesn't add capabilities—it adds reminders and structure.
-          </p>
-
-          <h3>Who it's for</h3>
-          <ul>
-            <li><strong>New to AI health conversations</strong> — gives you training wheels until the approach feels natural</li>
-            <li><strong>Want more structure</strong> — automatically anchors on your need type (acute, chronic, pre-visit, etc.)</li>
-            <li><strong>Don't trust your own prompting</strong> — ensures Claude asks the right follow-ups even if you forget to prompt it</li>
-          </ul>
-
-          <h3>What it does</h3>
-          <ul>
-            <li>Reminds Claude to check what context it has (and tell you what's missing)</li>
-            <li>Anchors on your need type—acute symptom, ongoing mystery, chronic condition, pre-visit prep</li>
-            <li>Encourages going right up to the line, not vague hand-waving</li>
-            <li>Teaches you how to use AI better as you go</li>
-          </ul>
-
-          <div class="download-box">
-            <h4>Download</h4>
-            <p>Works with Claude Desktop (macOS/Windows) and Claude.ai (web). Under 2KB.</p>
-            <a href="https://github.com/kmunki/health-skills/raw/master/skills/health-assistant.zip" class="btn" style="margin-top: 12px;">
-              Download health-assistant.zip
-            </a>
-          </div>
-
-          <h3>Installation</h3>
-          <div class="steps">
-            <div class="step">
-              <div class="step-num"></div>
-              <div class="step-content">
-                <h4>Add to Claude</h4>
-                <p><strong>Desktop:</strong> Settings → Features → Skills → Add Skill<br>
-                <strong>Web:</strong> Profile → Settings → Skills → Add Skill</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <div class="step-num"></div>
-              <div class="step-content">
-                <h4>Create a health project</h4>
-                <p>Start a new project called "Health" (or whatever). The skill activates automatically when you ask health questions.</p>
-              </div>
-            </div>
-          </div>
-
-          <h3>What's in it</h3>
-          <p>The skill is just a text file with instructions. No black boxes. <a href="https://github.com/kmunki/health-skills" target="_blank">View the source</a> or read it below:</p>
-
-          <pre><code># Health Assistant
-
-You're a world-class clinician with decades of experience
-—texting a dear friend. You know a lot, can help with
-quite a bit, and genuinely want to. But you also know
-you're not their doctor and can't examine them.
-
-## First: Notice Your Context
-- Where is this? Random conversation or health project?
-- What do you know? Memory? Project files? Baseline?
-- What's missing? Tell them what would help.
-
-## Then: Anchor on Their Need
-Acute symptom → Triage mindset
-Ongoing mystery → Differential diagnosis mindset
-Chronic condition → Long-term partner mindset
-Pre-visit prep → Advocate prep mindset
-
-## Always
-- Go right up to the line—give best thinking, not vague
-- Trust your instincts—if concerning, say so
-- Emergency override → direct to emergency services
-
-## Meta: Help Them Use AI Better
-Teach them: projects, memory, baselines.
-Make every future conversation better.</code></pre>
-        </section>
-
-        <!-- KNOW THE LIMITS -->
-        <section id="limits" class="section">
-          <h2>Know the limits</h2>
-
-          <div class="warning">
-            <p><strong>Not for emergencies.</strong> Chest pain, stroke symptoms (face drooping, arm weakness, speech difficulty), breathing difficulty, severe bleeding, or anything that feels like "something is really wrong"—call 911 or go to the ER. Do not chat with AI.</p>
-          </div>
-
-          <h3>What AI can't do</h3>
-          <ul>
-            <li><strong>Examine you.</strong> A doctor can feel, press, listen, look closely. AI only has what you describe.</li>
-            <li><strong>Run tests.</strong> Blood work, imaging, diagnostics require a healthcare system.</li>
-            <li><strong>Diagnose.</strong> "Possibilities to consider" is different from "you have X."</li>
-            <li><strong>Prescribe.</strong> Prescription medications require a licensed provider.</li>
-          </ul>
-
-          <h3>What AI can do</h3>
-          <ul>
-            <li><strong>Help you think.</strong> Work through possibilities, consider what else to look for.</li>
-            <li><strong>Prepare you for appointments.</strong> Clarify concerns, anticipate questions, prioritize.</li>
-            <li><strong>Explain medical concepts.</strong> Help you understand conditions, tests, treatments.</li>
-            <li><strong>Remember your context.</strong> Reference your history in every conversation.</li>
-          </ul>
-
-          <h3>The goal</h3>
-          <p>
-            Everyone deserves someone who'll actually think through their health with them.
-          </p>
-          <p>
-            This is early. If you try it—whether it helps or falls flat—<a href="mailto:kyle@kmunk.com">I'd love to hear</a>.
-          </p>
-        </section>
-
+      <div class="footnotes">
+        <ol>
+          <li id="fn:1">
+            <p>I'm not affiliated with Anthropic or any other lab. I just think Claude is the best model to use and generally trust Anthropic more than everyone else for a variety of reasons. I can't tell you what to do, but if you're taking some of my advice, might as well take most of it.</p>
+          </li>
+        </ol>
       </div>
+
     </div>
   </main>
 
   <footer>
     <div class="inner">
       <p>
-        <a href="https://github.com/kmunki/health-skills">Source on GitHub</a> · Early development
+        <a href="https://github.com/kmunki/health-skills" target="_blank">Source on GitHub</a> · Early development
       </p>
     </div>
   </footer>
 
+  <script src="https://unpkg.com/littlefoot/dist/littlefoot.js"></script>
   <script>
-    (function() {
-      // Carousel functionality
-      const container = document.getElementById('good-cards');
-      const dots = document.querySelectorAll('.carousel-dot');
-      const cards = container.querySelectorAll('.carousel-card.good');
-      let currentIndex = 0;
-      let autoplayInterval;
-      const AUTOPLAY_DELAY = 5000;
+    littlefoot.littlefoot();
 
-      function showCard(index) {
-        cards.forEach((card, i) => {
-          card.classList.remove('active');
-          if (i === index) {
-            card.classList.add('active');
-          }
-        });
-        dots.forEach((dot, i) => {
-          dot.classList.remove('active');
-          if (i === index) {
-            dot.classList.add('active');
-          }
-        });
-        currentIndex = index;
-      }
-
-      function nextCard() {
-        const next = (currentIndex + 1) % cards.length;
-        showCard(next);
-      }
-
-      function startAutoplay() {
-        autoplayInterval = setInterval(nextCard, AUTOPLAY_DELAY);
-      }
-
-      function stopAutoplay() {
-        clearInterval(autoplayInterval);
-      }
-
-      dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-          stopAutoplay();
-          showCard(i);
-          startAutoplay();
-        });
-      });
-
-      container.addEventListener('mouseenter', stopAutoplay);
-      container.addEventListener('mouseleave', startAutoplay);
-      startAutoplay();
-
-      // Sidebar visibility and active section highlighting
-      const sidebarInner = document.querySelector('.sidebar-inner');
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
-      const mainContent = document.querySelector('main');
-
-      function updateSidebar() {
-        // Show sidebar after scrolling past hero
-        const scrollY = window.scrollY;
-        const showThreshold = mainContent ? mainContent.offsetTop - 100 : 400;
-
-        if (scrollY > showThreshold) {
-          sidebarInner.classList.add('visible');
-        } else {
-          sidebarInner.classList.remove('visible');
-        }
-
-        // Highlight active section
-        let currentSection = '';
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop - 120;
-          if (scrollY >= sectionTop) {
-            currentSection = section.getAttribute('id');
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#' + currentSection) {
-            link.classList.add('active');
-          }
-        });
-      }
-
-      // Throttle scroll handler
-      let ticking = false;
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updateSidebar();
-            ticking = false;
-          });
-          ticking = true;
+    // Copy button functionality
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const code = btn.nextElementSibling.querySelector('code').textContent;
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          btn.textContent = 'Failed';
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+          }, 2000);
         }
       });
-
-      // Initial call
-      updateSidebar();
-    })();
+    });
   </script>
 
 </body>
